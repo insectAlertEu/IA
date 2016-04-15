@@ -96,7 +96,7 @@ html, body {
 	padding: 10px;
 	bottom:0px;
 	font-size: 0.9em;
-	text-align: right;
+	text-align: justify;
 	overflow:scroll;
 	overflow-y:auto;
 	overflow-x:hidden;
