@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>INSECT ALERT</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="http://test14100.futurehost.pl/images/favicon.ico" type="image/x-icon"/>
+  
+  <link rel="stylesheet" href="css/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+  <script src="leaflet.js"></script>
+  <script src="leaflet.label.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="geojson/Poland.geojson"></script>
+  <script type="text/javascript" src="geojson/hogweedPoland.geojson"></script>
+  <script type="text/javascript" src="geojson/Czech.geojson"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+
+    <div class="navbar-header">
+      <a class="navbar-left" rel="home" href="#" title="logo">
+        <img style="max-width:105px; padding-top: 5px; position:relative;"src="images/logo6.png"></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- <a class="navbar-brand" href="#">Insect Alert</a> -->
+    </div>
+
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="#">Project</a></li>
+        <li><a href="about.html">About</a></li>
+        <!--<li><a href="#">Blabla</a></li>-->
+      </ul>
+      <!-- <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul> -->
+    </div>
+</nav>
+
+<!--<nobr></nobr>-->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8"></div>
+      <div id='map'>
+       <div id="dim" class=""></div>
+
+       <div id="menu" class="window">
+        <div class="">
+        Choose region to show: <br><br>
+        <input type="checkbox" id="myCheck1" onclick="init2()"> Poland <br>
+        <input type="checkbox" id="myCheck2" onclick="init2()"> Czech Republic<br>
+        <!--<input type="checkbox" id="myCheck3" onclick="init2()"> Europe <br>--><br><br>
+
+        Choose Danger Index: <br><br>
+        <input type="radio" name="dane1" onclick="check(this.value)" value="ticks" checked="true"> Ticks<br>
+        <!--<input type="radio" name="dane1" onclick="check(this.value)" value="mosquito"> Mosquitoes<br>-->
+        <input type="radio" name="dane1" onclick="check(this.value)" value="hogweed"> Sosnowsky's hogweed<br><br><br>
+
+        <button onclick="init1()" style="float: right;">Proceed</button>
+        </div>
+        <div class="loading" style="float: right;">Loading...</div>
+       </div>
+     </div>
+
+    <div class="col-md-4"></div>
+      <div id="sideMenu" class="">
+	  <div id="data" class=""></div>
+	  <div id="info" class=""></div>
+	  </div>
+  </div>
+
+    <!-- <div class="col-sm-4">
+
+        <span class="glyphicon glyphicon-map-marker"></span>
+      <h2><strong>Insect Alert map</strong></h2>
+            <p><strong>USE:</strong> Zasada działania itd.</p>
+</div> -->
+
+<script type="text/javascript" src="js/init.js"></script>
+
+<script type="text/javascript" src="geojson/PL/Lower Silesian Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Kuyavian-Pomeranian Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Lodz Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Lublin Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Lubusz Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Lesser Poland Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Masovian Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Opole Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Podkarpackie Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Podlaskie Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Pomeranian Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Silesian Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Swietokrzyskie Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Warmian-Masurian Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/Greater Poland Voivodeship.geojson"></script>
+<script type="text/javascript" src="geojson/PL/West Pomeranian Voivodeship.geojson"></script>
+
+<script type="text/javascript" src="geojson/CZ/Central Bohemian.geojson"></script>
+<script type="text/javascript" src="geojson/CZ/Hradec Kralove.geojson"></script>
+<script type="text/javascript" src="geojson/CZ/Kralovy Vary.geojson"></script>
+<script type="text/javascript" src="geojson/CZ/Liberec.geojson"></script>
+<script type="text/javascript" src="geojson/CZ/Moravian Silesian.geojson"></script>
+<script type="text/javascript" src="geojson/CZ/Olomouc Region.geojson"></script>
+<script type="text/javascript" src="geojson/CZ/Pardubice Region.geojson"></script>
+<script type="text/javascript" src="geojson/CZ/Plzen Region.geojson"></script>
+<script type="text/javascript" src="geojson/CZ/Prague.geojson"></script>
+<script type="text/javascript" src="geojson/CZ/South Bohemian.geojson"></script>
+<script type="text/javascript" src="geojson/CZ/South Moravian.geojson"></script>
+<script type="text/javascript" src="geojson/CZ/Usti Nad Labem.geojson"></script>
+<script type="text/javascript" src="geojson/CZ/Vysocina Region.geojson"></script>
+<script type="text/javascript" src="geojson/CZ/Zlin Region.geojson"></script>
+
+<script type="text/javascript" src="js/polska.js"></script>
+<script type="text/javascript" src="js/czechy.js"></script>
+
+</div>
+
+
+</body>
+</html>
