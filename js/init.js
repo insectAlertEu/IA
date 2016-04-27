@@ -1,7 +1,7 @@
 ﻿var map = L.map('map',    {
 				center: [50,18],
 				zoom: 3,
-				minZoom:5,
+				
 				
 				doubleClickZoom: false,
 				zoomControl: false
@@ -24,160 +24,154 @@ L.control.scale({position: 'bottomright'}).addTo(map);	//ręcznie dodane kontrol
 
 document.getElementById("data").innerHTML = '<b>choose data to show</b>';	//wyświetlany tekst w oknie z danymi po prawej
 
-
-function init2(){		//uruchamiana przez zmianę checkboxów
-	if (menu.className == 'window collapsed') {	//działa dopiero po zminimalizowaniu menu (po naciśnięciu przycisku)
-		init1();
-	}	
-};
+		
+var group = new L.featureGroup();	//wszystkie aktualnie wyświetlane geojsony
 
 
-function init1(){		//funkcja uruchamiana po kliknięciu przycisku w menu początkowym, lub po zmianie zaznaczenia checkboxów już po zminimalizowaniu menu
- if (document.readyState === "complete") {		//menu zminimalizuje się po załadowaniu wszystkich danych
-	if (menu.className != 'window collapsed') {		//sprawdzanie czy menu jest już zminimalizowane (czy wejście do fukcji zostało zainicjowane przez przycisk proceed
-		dim.className = 'hide';		//wyłączanie zaciemnienia mapki
-		jQuery('div.window').toggleClass('collapsed');	//minimalizowanie menu
-
-	}	
-	
-document.getElementById("data").innerHTML = '<b>hover on region</b>';	//wyświetlany tekst w oknie z danymi po prawej
-	
-	var tick1 = document.getElementById("myCheck1").checked;
-	var tick2 = document.getElementById("myCheck2").checked;	//zmienne przechowujące stan checkboxów
-
-	var group = new L.featureGroup();
-	
-	if (tick1) {
-		Poland.addTo(map);	
-		group.addLayer(Poland);
-	}
-	else {
-
-		map.removeLayer(Poland);
-		group.removeLayer(Poland);
-		if (typeof regionPL != "undefined") {
-			map.removeLayer(regionPL);
-		}		
-		if (map.hasLayer(hogweedPoland)){
-
-		map.removeLayer(hogweedPoland);
-		}		
-	}
-
-	if (tick2) {
-		Czech.addTo(map);
-		group.addLayer(Czech);
-	
-	}
-	else {
-		map.removeLayer(Czech);
-		group.removeLayer(Czech);
-		if (typeof regionCZ != "undefined") {
-			map.removeLayer(regionCZ);
-		}			
-	}
- if (jQuery.isEmptyObject(group.getLayers()) == false){
-			map.fitBounds(group.getBounds());
-		}
-	
-
-	
-	legend.update(getColorPL);
- }
- 
- if (wsp == "HOGWEED" && document.getElementById("myCheck1").checked) {
- hogweedPoland.addTo(map);
- }
- 
-  console.log(wspNazwa);
- if (wspNazwa == 'ticks' ){
- console.log("asd");
-	var plik = "opisy/lymeDiseasePolandDesc.html";
-		jQuery.get(plik, function(opis) {
-		document.getElementById("info").innerHTML = opis;
-		})
- } else{
- document.getElementById("info").innerHTML = "";
- }
- 
- 
-};
-
-var slownikWskaznikow = {			//tymczasowe do testów - docelowo nazwa radioValue ma odpowiadać nazwie danej wartości w geojsonie
-	"ticks" : "LYME_DIS",
-	"mosquito" : "LYME_TREND",
-	"hogweed" : "HOGWEED",
+var slownikWskaznikow = {				//przypisanie nazw dla zmiennych Danger Indexów
+	"LYME_DIS" : "Lyme Disease D.I.",
+	"HYALOMMA" : "Ticks - Hyalomma occurence",
+	"IXODES_R" : "Ticks - Ixodes ricinus occurence",
+	"AEDES_ALBO" : "Mosquitoes - Aedes albopictus occurence",	
+	"HOGWEED" : "Sosnowsky's hogweed occurence",
 };	
 
-var wsp = slownikWskaznikow[jQuery('input[name="dane1"]:checked').val()];
-var wspNazwa = jQuery('input[name="dane1"]:checked').val();
+var wsp;			//aktualnie wybrany checkbox
+var wspNazwa;		//nazwa wybranego Danger Indexu
+
+function init(){		//funkcja uruchamiana po kliknięciu przycisku w menu początkowym
+ 
+	if (document.readyState === "complete") {		//menu zminimalizuje się po załadowaniu wszystkich danych
+		dim.className = 'hide';		//wyłączanie zaciemnienia mapki
+		jQuery('div.window').toggleClass('collapsed');	//minimalizowanie menu
+			
+		document.getElementById("data").innerHTML = '<b>hover on region</b>';	//wyświetlany tekst w oknie z danymi po prawej
+		check(jQuery('input[name="dane1"]:checked').val());			//sprawdzanie aktualnie wybranego checkboxa i ładowanie geojsonów
+	}
+};
 
 
-	
 function check(radioValue) {
-
-
-
-		wspNazwa = radioValue;
-		wsp = slownikWskaznikow[radioValue];
-
-	if (radioValue == 'ticks' ){
-		WojPL.eachLayer(function (layer) {
-			layer.setStyle(styleLymePL);
-		});
-		Poland.setStyle(styleLymePL);
-		if (map.hasLayer(hogweedPoland)){
-			map.removeLayer(hogweedPoland);
-		}
-		WojCZ.eachLayer(function (layer) {
-			layer.setStyle(styleLymeCZ);
-		});
-		Czech.setStyle(styleLymeCZ);
-		
-
-
-	}
-	else if (radioValue == 'mosquito' ) {
-		WojPL.eachLayer(function (layer) {
-			layer.setStyle(styleLymeTrendPL);
-		});
-		Poland.setStyle(styleLymeTrendPL);
-		if (map.hasLayer(hogweedPoland)){
-			map.removeLayer(hogweedPoland);
-		}		
-		WojCZ.eachLayer(function (layer) {
-			layer.setStyle(noData);
-		});
-		Czech.setStyle(noData);
-	}
+	wspNazwa = slownikWskaznikow[radioValue];
+	wsp = radioValue;
+ 
+	if (menu.className == 'window collapsed') {	//działa dopiero po zminimalizowaniu menu (po naciśnięciu przycisku)
 	
-	else if (radioValue == 'hogweed' ) {
-		Poland.setStyle(noData);
-		if (menu.className == 'window collapsed' && map.hasLayer(hogweedPoland) != true && document.getElementById("myCheck1").checked) {	//działa dopiero po zminimalizowaniu menu (po naciśnięciu przycisku)
-				hogweedPoland.addTo(map);
+		if (typeof regionPL != "undefined") {
+			map.removeLayer(regionPL);
 		}	
-		WojCZ.eachLayer(function (layer) {
-			layer.setStyle(noData);
-		});
-		Czech.setStyle(noData);
-	}	
+		if (typeof regionCZ != "undefined") {
+			map.removeLayer(regionCZ);
+		}				
 	
-	
-	
-if (menu.className == 'window collapsed'){
-	legend.update();
+		if (radioValue == 'LYME_DIS' ){
+			
+			var plik = "opisy/lymeDiseasePolandDesc.html";
+			jQuery.get(plik, function(opis) {
+				document.getElementById("info").innerHTML = opis;
+			})
+		
+			Poland.addTo(map);	
+			group.addLayer(Poland);
+			Czech.addTo(map);
+			group.addLayer(Czech);
+		
+			WojPL.eachLayer(function (layer) {
+				layer.setStyle(styleLymePL);
+			});
+			Poland.setStyle(styleLymePL);
 
-	if (radioValue == 'ticks' ){
-		var plik = "opisy/lymeDiseasePolandDesc.html";
-		jQuery.get(plik, function(opis) {
-			document.getElementById("info").innerHTML = opis;
-		})
-	} else{
- document.getElementById("info").innerHTML = "";
- }
+			WojCZ.eachLayer(function (layer) {
+				layer.setStyle(styleLymeCZ);
+			});
+			Czech.setStyle(styleLymeCZ);
 
+			if (typeof clickRegion != "undefined") {
+				map.addLayer(clickRegion);
+				Poland.resetStyle(clickRegion);
+				Czech.resetStyle(clickRegion);
+			}			
+		}
+	
+		if (radioValue == 'HYALOMMA' ){
+			document.getElementById("info").innerHTML = "";
+					
+			Europe.addTo(map);
+			group.addLayer(Europe);
+			
+			map.removeLayer(Poland);		
+			map.removeLayer(Czech);
+			group.removeLayer(Poland);
+			group.removeLayer(Czech);
+			
+			Europe.setStyle(styleLymeEUHYA);	
+		}
+
+		else if (radioValue == 'IXODES_R' ){
+			document.getElementById("info").innerHTML = "";
+					
+			Europe.addTo(map);
+			group.addLayer(Europe);
+			
+
+			map.removeLayer(Poland);			
+			map.removeLayer(Czech);		
+			group.removeLayer(Poland);
+			group.removeLayer(Czech);
+			
+			Europe.setStyle(styleLymeEUIXO);	
+		}
+	
+		else if (radioValue == 'AEDES_ALBO' ) {
+			document.getElementById("info").innerHTML = "";
+
+			Europe.addTo(map);
+			group.addLayer(Europe);
+
+			map.removeLayer(Poland);			
+			map.removeLayer(Czech);
+			group.removeLayer(Poland);
+			group.removeLayer(Czech);
+			
+			Europe.setStyle(styleLymeEUAED);	
+		}
+		else {
+			map.removeLayer(Europe);		
+			group.removeLayer(Europe);
+		}
+	
+		if (radioValue == 'HOGWEED' ) {
+			document.getElementById("info").innerHTML = "";
+
+			Poland.addTo(map);	
+			group.addLayer(Poland);
+				
+			Poland.setStyle(noData);
+			
+			if (map.hasLayer(hogweedPoland) != true) {
+				hogweedPoland.addTo(map);
+			}	
+
+			map.removeLayer(Czech);		
+			group.removeLayer(Czech);
+		
+		} else {
+			if (map.hasLayer(hogweedPoland)){
+				map.removeLayer(hogweedPoland);
+			}			
+		}
+		
+		
+		if (jQuery.isEmptyObject(group.getLayers()) == false){
+			map.fitBounds(group.getBounds());
+		}	
+
+		legend.update();
+
+	}
 }
-}
+
+
 
 
 new L.control.zoom({position: 'topright'}).addTo(map);
@@ -190,18 +184,17 @@ legend.onAdd = function (map) {
     return this.div;
 };
 
-
 legend.update = function () {
+	var grades;
+	var labels;
 
-	if (wsp != "HOGWEED"){
-	var grades = [0, 126, 251, 376, 501, 626, 751, 876, -1],
+	if (wsp == "LYME_DIS"){
+		grades = [0, 126, 251, 376, 501, 626, 751, 876, -1];
 		labels = ["<b>low risk</b>", "", "", "", "", "", "", "<b>high risk</b></br>", "<b>no data</b>"];
-
 	}
 	else {
-	var grades = [0, 876, -1],
+		grades = [0, 751, -1];
 		labels = ["<b>safe zone</b>", "<b>danger zone</b></br>", "<b>no data</b>"];
-
 	}
 		
 	this.div.innerHTML = '';
