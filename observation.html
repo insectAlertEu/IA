@@ -12,8 +12,12 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
   <script src="leaflet.js"></script>
+  <script src="leaflet.label.js"></script>  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
+  <script type="text/javascript" src="geojson/Poland.geojson"></script>  
+  <script type="text/javascript" src="geojson/hogweedPoland.geojson"></script>  
 </head>
 <body>
 
@@ -32,11 +36,10 @@
 
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="index.html">Project</a></li>
-		<li><a href="observation.html">Add observation</a></li>
-        <li class="active"><a href="about.html">About</a></li>
+		<li><a href="index.html">Project</a></li>
+		<li class="active"><a href="observation.html">Add observation</a></li>
+        <li><a href="about.html">About</a></li>
         <li><a href="status.html">Status</a></li>				
-
       </ul>
       <!-- <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -49,25 +52,33 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12"></div>
-    <div class="text-center">
-    <h1>Insect Alert App</h1>
-    <p>Web app informing the public about areas with dangerous insects, snakes, or plants. Project for European Commision for MYGEOSS (<a href="http://digitalearthlab.jrc.ec.europa.eu/mygeoss/index.cfm">digitalearthlab.jrc.ec.europa.eu/mygeoss</a>). The app is published under the European Union Public License (EUPL) Version 1.1.</p>
-
-    <h2>Contact and Links</h2>
-
-    <p>App Website: <a href="http://www.insect-alert.eu/">http://www.insect-alert.eu/</a></p>
-
-    <h2>Funding</h2>
-
-    <p>This application has been developed within the MyGEOSS project, which has received funding from the European Union's Horizon 2020 research and innovation programme.</p>
-
-    <h2>Disclaimer</h2>
-
-    <p>The JRC, or as the case may be the European Commission, shall not be held liable for any direct or indirect, incidental, consequential or other damages, including but not limited to the loss of data, loss of profits, or any other financial loss arising from the use of this application, or inability to use it, even if the JRC is notified of the possibility of such damages.</p>
-	<p>The medical information on our website is provided without any representations or warranties, express or implied. You must rely only on the medical advice from your doctor.</p>
+    
+	<form action="" method="post">
+<input id="city" name="city" type="text" onkeyup="getResults(this.value)"/>
+<input type="text" id="result" value=""/>
+<select id="myselect" name="myselect" ><option selected="selected">blank</option></select>
+</form>
+</div>
+<script type="text/javascript" src="js/Poland.js"></script>
+<script>
+function getResults(str) {
+$.ajax({
+    url:'suggest.html',
+    type:'POST',
+    data: 'q=' + str,
+    dataType: 'json',
+    success: function( json ) {
+        $.each(json, function(i, value) {
+            $('#myselect').append($('<option>').text(value.text).attr('value', value.val));
+        });
+    }
+});
+};
+</script>
 	
-    <br><h2><a href="index.html" style="text-decoration:none; color: #28004d"><span style="color: #e60000">Back to map</span></h2></div>
+	
+	
+	
 </div>
 </div>
 

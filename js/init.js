@@ -1,11 +1,9 @@
 ﻿var map = L.map('map',    {
-				center: [50,18],
-				zoom: 3,
-				
-				
-				doubleClickZoom: false,
-				zoomControl: false
-    		});							//tworzenie containera na mapę
+		center: [50,18],
+		zoom: 3,
+		doubleClickZoom: false,
+		zoomControl: false
+	});							//tworzenie containera na mapę
 			
 map.createPane('labels');				//"warstwa" (nie mylić z layer) na mapie znajdująca się powyżej innych
 map.getPane('labels').style.zIndex = 650;	// wyświetlająca labelsy
@@ -27,6 +25,16 @@ document.getElementById("data").innerHTML = '<b>choose data to show</b>';	//wyś
 		
 var group = new L.featureGroup();	//wszystkie aktualnie wyświetlane geojsony
 
+$("document").ready(function() {
+
+  $('.dropdown-menu').on('click', function(e) {
+      if($(this).hasClass('dropdown-menu-form')) {
+          e.stopPropagation();
+      }
+  });
+});
+			
+
 
 var slownikWskaznikow = {				//przypisanie nazw dla zmiennych Danger Indexów
 	"LYME_DIS" : "Lyme Disease D.I.",
@@ -34,6 +42,12 @@ var slownikWskaznikow = {				//przypisanie nazw dla zmiennych Danger Indexów
 	"IXODES_R" : "Ticks - Ixodes ricinus occurence",
 	"AEDES_ALBO" : "Mosquitoes - Aedes albopictus occurence",	
 	"HOGWEED" : "Sosnowsky's hogweed occurence",
+	"MACROVIPER" : "MACROVIPER occurence",	
+	"V_XANTHINA" : "V_XANTHINA occurence",	
+	"V_AMMODYTE" : "V_AMMODYTE occurence",	
+	"V_ASPIS" : "V_ASPIS occurence",	
+	"V_BERUS" : "V_BERUS occurence",	
+	"V_LATASTEI" : "V_LATASTEI occurence",	
 };	
 
 var wsp;			//aktualnie wybrany checkbox
@@ -104,7 +118,7 @@ function check(radioValue) {
 			group.removeLayer(Poland);
 			group.removeLayer(Czech);
 			
-			Europe.setStyle(styleLymeEUHYA);	
+			Europe.setStyle(styleEUHYA);	
 		}
 
 		else if (radioValue == 'IXODES_R' ){
@@ -119,7 +133,7 @@ function check(radioValue) {
 			group.removeLayer(Poland);
 			group.removeLayer(Czech);
 			
-			Europe.setStyle(styleLymeEUIXO);	
+			Europe.setStyle(styleEUIXO);	
 		}
 	
 		else if (radioValue == 'AEDES_ALBO' ) {
@@ -133,8 +147,87 @@ function check(radioValue) {
 			group.removeLayer(Poland);
 			group.removeLayer(Czech);
 			
-			Europe.setStyle(styleLymeEUAED);	
+			Europe.setStyle(styleEUAED);	
 		}
+		else if (radioValue == 'MACROVIPER' ) {
+			document.getElementById("info").innerHTML = "";
+
+			Europe.addTo(map);
+			group.addLayer(Europe);
+
+			map.removeLayer(Poland);			
+			map.removeLayer(Czech);
+			group.removeLayer(Poland);
+			group.removeLayer(Czech);
+			
+			Europe.setStyle(styleEUMV);	
+		}		
+		else if (radioValue == 'V_XANTHINA' ) {
+			document.getElementById("info").innerHTML = "";
+
+			Europe.addTo(map);
+			group.addLayer(Europe);
+
+			map.removeLayer(Poland);			
+			map.removeLayer(Czech);
+			group.removeLayer(Poland);
+			group.removeLayer(Czech);
+			
+			Europe.setStyle(styleEUVX);	
+		}
+		else if (radioValue == 'V_AMMODYTE' ) {
+			document.getElementById("info").innerHTML = "";
+
+			Europe.addTo(map);
+			group.addLayer(Europe);
+
+			map.removeLayer(Poland);			
+			map.removeLayer(Czech);
+			group.removeLayer(Poland);
+			group.removeLayer(Czech);
+			
+			Europe.setStyle(styleEUVAM);	
+		}
+		else if (radioValue == 'V_ASPIS' ) {
+			document.getElementById("info").innerHTML = "";
+
+			Europe.addTo(map);
+			group.addLayer(Europe);
+
+			map.removeLayer(Poland);			
+			map.removeLayer(Czech);
+			group.removeLayer(Poland);
+			group.removeLayer(Czech);
+			
+			Europe.setStyle(styleEUVAS);	
+		}
+		else if (radioValue == 'V_BERUS' ) {
+			document.getElementById("info").innerHTML = "";
+
+			Europe.addTo(map);
+			group.addLayer(Europe);
+
+			map.removeLayer(Poland);			
+			map.removeLayer(Czech);
+			group.removeLayer(Poland);
+			group.removeLayer(Czech);
+			
+			Europe.setStyle(styleEUVB);	
+		}
+		else if (radioValue == 'V_LATASTEI' ) {
+			document.getElementById("info").innerHTML = "";
+
+			Europe.addTo(map);
+			group.addLayer(Europe);
+
+			map.removeLayer(Poland);			
+			map.removeLayer(Czech);
+			group.removeLayer(Poland);
+			group.removeLayer(Czech);
+			
+			Europe.setStyle(styleEUVL);	
+		}		
+		
 		else {
 			map.removeLayer(Europe);		
 			group.removeLayer(Europe);
@@ -170,8 +263,6 @@ function check(radioValue) {
 
 	}
 }
-
-
 
 
 new L.control.zoom({position: 'topright'}).addTo(map);

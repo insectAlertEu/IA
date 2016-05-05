@@ -100,6 +100,7 @@ function onEachFeatureCZ(feature, layer) {
 		mouseover: highlightFeatureCZ,
 		mouseout: resetHighlightCZ,
 		click: zoomToFeatureCZ,
+		contextmenu: contextmenuPL
     });
 }
 
@@ -179,6 +180,7 @@ function onEachFeature(feature, layer) {
 		mouseover: highlightFeatureCZregion,
         mouseout: resetHighlightCZ,
         dblclick: unZoomCZ,
+		contextmenu: contextmenuPL
 	});
 }
 

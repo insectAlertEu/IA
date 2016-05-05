@@ -169,12 +169,20 @@ function onEachFeaturePL(feature, layer) {
 	else{
 	layer.bindLabel("Trend: " + feature.properties.LYME_TREND, {pane:'labels'});
 	}
+	
+	
     layer.on({
 		mouseover: highlightFeaturePL,
 		mouseout: resetHighlightPL,
 		click: zoomToFeaturePL,
+		contextmenu: contextmenuPL
     });
 }
+
+function contextmenuPL(e) {
+		    window.location.href = "observation.html"+"?"+this.feature.properties.NAME_ENG;	
+}	
+
 
 function onEachFeaturePLhogweed(feature, layer) {
     layer.on({
@@ -184,22 +192,22 @@ function onEachFeaturePLhogweed(feature, layer) {
     });
 }
 
-var Dolnoslaskie = L.geoJson(Dolnoslaskie,  {onEachFeature: onEachFeature});
-var KujawskoPomorskie = L.geoJson(KujawskoPomorskie,  {onEachFeature: onEachFeature});
-var Lodzkie = L.geoJson(Lodzkie,  {onEachFeature: onEachFeature});
-var Lubelskie = L.geoJson(Lubelskie,  {onEachFeature: onEachFeature});
-var Lubuskie = L.geoJson(Lubuskie,  {onEachFeature: onEachFeature});
-var Malopolskie = L.geoJson(Malopolskie,  {onEachFeature: onEachFeature});
-var Mazowieckie = L.geoJson(Mazowieckie,  {onEachFeature: onEachFeature});
-var Opolskie = L.geoJson(Opolskie,  {onEachFeature: onEachFeature});
-var Podkarpackie = L.geoJson(Podkarpackie,  {onEachFeature: onEachFeature});
-var Podlaskie = L.geoJson(Podlaskie,  {onEachFeature: onEachFeature});
-var Pomorskie = L.geoJson(Pomorskie,  {onEachFeature: onEachFeature});
-var Slaskie = L.geoJson(Slaskie,  {onEachFeature: onEachFeature});
-var Swietokrzyskie = L.geoJson(Swietokrzyskie,  {onEachFeature: onEachFeature});
-var WarminskoMazurskie = L.geoJson(WarminskoMazurskie,  {onEachFeature: onEachFeature});
-var Wielkopolskie = L.geoJson(Wielkopolskie,  {onEachFeature: onEachFeature});
-var ZachodnioPomorskie = L.geoJson(ZachodnioPomorskie,  {onEachFeature: onEachFeature});
+var Dolnoslaskie = L.geoJson(Dolnoslaskie,  {onEachFeature: onEachFeaturePLregion});
+var KujawskoPomorskie = L.geoJson(KujawskoPomorskie,  {onEachFeature: onEachFeaturePLregion});
+var Lodzkie = L.geoJson(Lodzkie,  {onEachFeature: onEachFeaturePLregion});
+var Lubelskie = L.geoJson(Lubelskie,  {onEachFeature: onEachFeaturePLregion});
+var Lubuskie = L.geoJson(Lubuskie,  {onEachFeature: onEachFeaturePLregion});
+var Malopolskie = L.geoJson(Malopolskie,  {onEachFeature: onEachFeaturePLregion});
+var Mazowieckie = L.geoJson(Mazowieckie,  {onEachFeature: onEachFeaturePLregion});
+var Opolskie = L.geoJson(Opolskie,  {onEachFeature: onEachFeaturePLregion});
+var Podkarpackie = L.geoJson(Podkarpackie,  {onEachFeature: onEachFeaturePLregion});
+var Podlaskie = L.geoJson(Podlaskie,  {onEachFeature: onEachFeaturePLregion});
+var Pomorskie = L.geoJson(Pomorskie,  {onEachFeature: onEachFeaturePLregion});
+var Slaskie = L.geoJson(Slaskie,  {onEachFeature: onEachFeaturePLregion});
+var Swietokrzyskie = L.geoJson(Swietokrzyskie,  {onEachFeature: onEachFeaturePLregion});
+var WarminskoMazurskie = L.geoJson(WarminskoMazurskie,  {onEachFeature: onEachFeaturePLregion});
+var Wielkopolskie = L.geoJson(Wielkopolskie,  {onEachFeature: onEachFeaturePLregion});
+var ZachodnioPomorskie = L.geoJson(ZachodnioPomorskie,  {onEachFeature: onEachFeaturePLregion});
 
 
 
@@ -258,7 +266,7 @@ function unZoomPL(e) {
 	map.fitBounds(Poland.getBounds()); 
 }
 
-function onEachFeature(feature, layer) {
+function onEachFeaturePLregion(feature, layer) {
 
 	if (feature.properties.LYME_TREND == -11){
 	layer.bindLabel("no data", {pane:'labels'});
@@ -270,6 +278,7 @@ function onEachFeature(feature, layer) {
 		mouseover: highlightFeaturePLregion,
         mouseout: resetHighlightPL,
         dblclick: unZoomPL,
+		contextmenu: contextmenuPL
 	});
 }
 

@@ -6,20 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="http://test14100.futurehost.pl/images/favicon.ico" type="image/x-icon"/>
-
+  
   <link rel="stylesheet" href="css/leaflet.css" />
+
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
   <script src="leaflet.js"></script>
   <script src="leaflet.label.js"></script>
+
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
   <script type="text/javascript" src="geojson/Poland.geojson"></script>
   <script type="text/javascript" src="geojson/hogweedPoland.geojson"></script>
   <script type="text/javascript" src="geojson/Czech.geojson"></script>
-  <script type="text/javascript" src="geojson/Europe.geojson"></script>
+  <script type="text/javascript" src="geojson/Europe.geojson"></script>  
 </head>
 
 <body>
@@ -40,9 +44,10 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li class="active"><a href="#">Project</a></li>
+        <li><a href="observation.html">Add observation</a></li>		
         <li><a href="about.html">About</a></li>
-        <li><a href="status.html">Status</a></li>
-        <!--<li><a href="#">Blabla</a></li>-->
+        <li><a href="status.html">Status</a></li>		
+
       </ul>
       <!-- <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -54,32 +59,61 @@
 <!--<nobr></nobr>-->
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-8"></div>
-      <div id='map'>
-       <div id="dim" class=""></div>
+	<div class="row">
+		<div class="col-md-8"></div>
+		<div id='map'>
+			<div id="dim" class=""></div>
 
-       <div id="menu" class="window">
-        <div class="">
+			<div id="menu" class="window">
+				<div class="">
 
-        Choose Danger Index: <br><br>
-        <div><input id="radio1" type="radio" name="dane1" onclick="check(this.value)" value="LYME_DIS" checked="true"><label for="radio1">Ticks - Lyme Disease D.I.</br>(POL and CZE only)</label></div>
-		<div><input id="radio2" type="radio" name="dane1" onclick="check(this.value)" value="HYALOMMA"><label for="radio2"> Ticks - Hyalomma</br> occurence (EUR)</label></div>
-		<div><input id="radio3" type="radio" name="dane1" onclick="check(this.value)" value="IXODES_R"><label for="radio3"> Ticks - Ixodes ricinus</br> occurence (EUR)</label></div>
-		<div><input id="radio4" type="radio" name="dane1" onclick="check(this.value)" value="AEDES_ALBO"><label for="radio4"> Mosquitoes - Aedes</br> albopictus occurence (EUR)</label></div>
-        <div><input id="radio5" type="radio" name="dane1" onclick="check(this.value)" value="HOGWEED"><label for="radio5"> Sosnowsky's hogweed</br> occurence (POL only)</label></div>
+					Choose Danger Index: <br><br>
+					<div class="dropdown">
+						<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Ticks<b class="caret"></b></a>
+						<ul class="dropdown-menu dropdown-menu-form" role="menu">
+							<li><input id="radio1" type="radio" name="dane1" onclick="check(this.value)" value="LYME_DIS" checked="true"><label for="radio1">Lyme Disease D.I.</label></li>
+							<li><input id="radio2" type="radio" name="dane1" onclick="check(this.value)" value="HYALOMMA"><label for="radio2">Hyalomma</label></li>
+							<li><input id="radio3" type="radio" name="dane1" onclick="check(this.value)" value="IXODES_R"><label for="radio3">Ixodes ricinus</label></li>
+						</ul>
+					</div></br>
 
-        <button onclick="init()" style="float: right;">Proceed</button>
-        </div>
-       </div>
-     </div>
+					<div class="dropdown">
+						<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Snakes<b class="caret"></b></a>
+						<ul class="dropdown-menu dropdown-menu-form" role="menu">
+							<li><input id="radio6" type="radio" name="dane1" onclick="check(this.value)" value="MACROVIPER"><label for="radio6">MACROVIPER</label></li>
+							<li><input id="radio7" type="radio" name="dane1" onclick="check(this.value)" value="V_XANTHINA"><label for="radio7">V_XANTHINA</label></li>
+							<li><input id="radio8" type="radio" name="dane1" onclick="check(this.value)" value="V_AMMODYTE"><label for="radio8">V_AMMODYTE</label></li>
+							<li><input id="radio9" type="radio" name="dane1" onclick="check(this.value)" value="V_ASPIS"><label for="radio9">V_ASPIS</label></li>
+							<li><input id="radio10" type="radio" name="dane1" onclick="check(this.value)" value="V_BERUS"><label for="radio10">V_BERUS</label></li>
+							<li><input id="radio11" type="radio" name="dane1" onclick="check(this.value)" value="V_LATASTEI"><label for="radio11">V_LATASTEI</label></li>
+						</ul>
+					</div></br>
+
+					<div class="dropdown">
+						<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Mosquitoes<b class="caret"></b></a>
+						<ul class="dropdown-menu dropdown-menu-form" role="menu">
+							<li><input id="radio4" type="radio" name="dane1" onclick="check(this.value)" value="AEDES_ALBO"><label for="radio4">Aedes albopictus</label></li>
+						</ul>
+					</div></br>
+
+					<div class="dropdown">
+						<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Plants<b class="caret"></b></a>
+						<ul class="dropdown-menu dropdown-menu-form" role="menu">
+							<li><input id="radio5" type="radio" name="dane1" onclick="check(this.value)" value="HOGWEED"><label for="radio5">Sosnowsky's&nbsphogweed</label></li>						
+						</ul>
+					</div></br>
+
+					<button onclick="init()" style="float: right;">Proceed</button>
+				</div>
+			</div>
+		</div>
 
     <div class="col-md-4"></div>
-      <div id="sideMenu" class="">
-	  <div id="data" class=""></div>
-	  <div id="info" class=""></div>
-	  </div>
-  </div>
+    <div id="sideMenu" class="">
+	<div id="data" class=""></div>
+	<div id="info" class=""></div>
+	</div>
+	</div>
 
     <!-- <div class="col-sm-4">
 

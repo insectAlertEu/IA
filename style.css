@@ -208,7 +208,7 @@ table#statusTable td	{
 	top: 0;
 	margin-left:10px;
 	margin-top:10px;
-	font:bold 1vmin 'Roboto', sans-serif !important;
+	font:bold 1vw 'Roboto', sans-serif !important;
 }
 
 .window.collapsed button {
@@ -291,7 +291,7 @@ input[type=radio   ]:not(old){
 
 input[type=radio   ]:not(old) + label{
   display      : inline-block;
-  margin-left  : -1em;
+  margin-left  : -1.3em;
   padding-left : 1.5em;
   background   : url('../images/checks.png') no-repeat left center;
   background-size: contain;
@@ -315,15 +315,6 @@ input[type=radio]:not(old):checked + label{
     overflow-y: scroll;
 }
 
-/* Dropdown Button 
-.dropbtn {
-    
-    color: black;
-
-    cursor: pointer;
-}
-
-*/
 .dropdown-menu {
     position: relative !important;
 	display:inherit !important;
@@ -367,44 +358,3 @@ input[type=radio]:not(old):checked + label{
 .open>.dropdown-toggle.btn {
  background-color: #31c400;
 }
-
-/*
-
-
-
-.dropdown-content {
-	max-height: 0;
-	overflow: hidden;
-	position:relative;
-
-	-webkit-transition: max-height 1.8s;
-	-moz-transition: max-height 1.8s;
-	transition: max-height 1.8s;
-
-	-webkit-transition-delay: 2s;
-	-moz-transition-delay: 2s;
-	transition-delay: 2s;
-
-}
-
-
-
-
-.dropdown-content a:hover {background-color: #f1f1f1}
-
-
-.dropdown:hover .dropdown-content {
-	-webkit-transition: max-height 0.8s;
-	-moz-transition: max-height 0.8s;
-	transition: max-height 0.8s;
-	max-height: 300px;
-
-	
-
-}
-
-
-
-.dropdown:hover .dropbtn {
-    background-color: #3e8e41;
-}/*
