@@ -26,7 +26,6 @@ document.getElementById("data").innerHTML = '<b>choose data to show</b>';	//wyś
 var group = new L.featureGroup();	//wszystkie aktualnie wyświetlane geojsony
 
 $("document").ready(function() {
-
   $('.dropdown-menu').on('click', function(e) {
       if($(this).hasClass('dropdown-menu-form')) {
           e.stopPropagation();
@@ -37,35 +36,56 @@ $("document").ready(function() {
 
 
 var slownikWskaznikow = {				//przypisanie nazw dla zmiennych Danger Indexów
-	"LYME_DIS" : "Lyme Disease D.I.",
-	"HYALOMMA" : "Ticks - Hyalomma occurence",
-	"IXODES_R" : "Ticks - Ixodes ricinus occurence",
-	"AEDES_ALBO" : "Mosquitoes - Aedes albopictus occurence",	
-	"HOGWEED" : "Sosnowsky's hogweed occurence",
-	"MACROVIPER" : "MACROVIPER occurence",	
-	"V_XANTHINA" : "V_XANTHINA occurence",	
-	"V_AMMODYTE" : "V_AMMODYTE occurence",	
-	"V_ASPIS" : "V_ASPIS occurence",	
-	"V_BERUS" : "V_BERUS occurence",	
-	"V_LATASTEI" : "V_LATASTEI occurence",	
+	"LYME_DIS" : "Castor bean tick",
+	"HYALOMMA" : "Hyalomma marginatum tick",
+	"IXODES_R" : "Castor bean tick",
+	"AEDES_ALBO" : "Tiger mosquito",	
+	"HOGWEED" : "Sosnowsky's hogweed",
+	"MACROVIPER" : "Milos viper",	
+	"V_XANTHINA" : "Rock viper",	
+	"V_AMMODYTE" : "Horned viper",	
+	"V_ASPIS" : "Asp viper",	
+	"V_BERUS" : "Common European viper",	
+	"V_LATASTEI" : "Latastes viper",	
 };	
 
 var wsp;			//aktualnie wybrany checkbox
 var wspNazwa;		//nazwa wybranego Danger Indexu
 
-function init(){		//funkcja uruchamiana po kliknięciu przycisku w menu początkowym
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip({
+	trigger : 'manual',
+	delay: 200,
+	animation: 'fadeIn',
+	placement: 'left',
+	title: 'Select Danger Index',
+	});
+    
+});
  
-	if (document.readyState === "complete") {		//menu zminimalizuje się po załadowaniu wszystkich danych
-		dim.className = 'hide';		//wyłączanie zaciemnienia mapki
-		jQuery('div.window').toggleClass('collapsed');	//minimalizowanie menu
-			
-		document.getElementById("data").innerHTML = '<b>hover on region</b>';	//wyświetlany tekst w oknie z danymi po prawej
-		check(jQuery('input[name="dane1"]:checked').val());			//sprawdzanie aktualnie wybranego checkboxa i ładowanie geojsonów
+function init(){		//funkcja uruchamiana po kliknięciu przycisku w menu początkowym
+
+	if (typeof wsp == "undefined") {
+		$('[data-toggle="tooltip"]').tooltip('show');
+		setTimeout(function(){
+		$('[data-toggle="tooltip"]').tooltip('hide');
+		}, 2000);		
+	} 
+	else {
+		$('[data-toggle="tooltip"]').tooltip('destroy');
+		if (document.readyState === "complete") {		//menu zminimalizuje się po załadowaniu wszystkich danych
+			dim.className = 'hide';		//wyłączanie zaciemnienia mapki
+			jQuery('div.window').toggleClass('collapsed');	//minimalizowanie menu
+				
+//			document.getElementById("data").innerHTML = '<b>hover on region</b>';	//wyświetlany tekst w oknie z danymi po prawej
+			check(jQuery('input[name="dane1"]:checked').val());			//sprawdzanie aktualnie wybranego checkboxa i ładowanie geojsonów
+		}
 	}
 };
 
 
 function check(radioValue) {
+
 	wspNazwa = slownikWskaznikow[radioValue];
 	wsp = radioValue;
  
@@ -265,12 +285,28 @@ function check(radioValue) {
 }
 
 
+
+var info = L.control({ position: 'topright' });
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info');
+    this.update();
+    return this._div;
+};
+info.update = function (props) {
+
+			info._div.innerHTML = document.getElementById("data").innerHTML
+		
+};
+info.addTo(map);
+
+
 new L.control.zoom({position: 'topright'}).addTo(map);
 
 var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {
-    this.div = L.DomUtil.create('div', 'info legend');
+    this.div = L.DomUtil.create('div', 'legend');
 	legend.update();
     return this.div;
 };

@@ -131,8 +131,8 @@ if (!L.Browser.ie) {
 	var props = 'e.target.feature.properties.'+wsp+'';
 	
 
-	document.getElementById("data").innerHTML = '<b>' + this.feature.properties.NAME_ENG +'</b></br></br>' + wspNazwa +': '  + eval(props)  +'</br>'; //  + '<object type="text/html" data="'+plik+'"></object>';
-	
+	info._div.innerHTML = '<b>' + this.feature.properties.NAME_ENG +'</b></br></br>' + wspNazwa +': '  + eval(props)  +'</br>'; //  + '<object type="text/html" data="'+plik+'"></object>';
+	//document.getElementById("data").innerHTML
 }
 
 function resetHighlightEU(e) {	
@@ -144,8 +144,8 @@ function resetHighlightEU(e) {
 		fillOpacity: 0.80,
 	});
     this.bringToBack();
-	document.getElementById("data").innerHTML = "<b>hover on region</b>";
-
+	info._div.innerHTML = "<b>hover on region</b>";
+//document.getElementById("data").innerHTML
     }
 
 

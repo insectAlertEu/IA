@@ -39,8 +39,8 @@ if (!L.Browser.ie) {
 	//var props = 'e.target.feature.properties.'+wsp+'';
 	var props = 'e.target.feature.properties.LymeB2012';
 
-	document.getElementById("data").innerHTML = '<b>' + this.feature.properties.NAME_ENG +'</b></br></br>' + wspNazwa +': '  + eval(props)  +'/5</br>'; //  + '<object type="text/html" data="'+plik+'"></object>';
-	
+	info._div.innerHTML = '<b>' + this.feature.properties.NAME_ENG +'</b></br></br>' + wspNazwa +': '  + eval(props)  +'/5</br>'; //  + '<object type="text/html" data="'+plik+'"></object>';
+//document.getElementById("data").innerHTML	
 }
 
 function resetHighlightCZ(e) {	
@@ -52,8 +52,8 @@ function resetHighlightCZ(e) {
 		fillOpacity: 0.80,
 	});
     this.bringToBack();
-	document.getElementById("data").innerHTML = "<b>hover on region</b>";
-
+	info._div.innerHTML = "<b>hover on region</b>";
+//document.getElementById("data").innerHTML
     }
 
 
@@ -159,8 +159,8 @@ if (!L.Browser.ie) {
 }
 	
 	var props = 'e.target.feature.properties.LymeB2012';
-	document.getElementById("data").innerHTML = '<b>' + this.feature.properties.Okres + '</b></br></br>' + wspNazwa +': ' + eval(props)  +'/5</br></br></br>';
-
+	info._div.innerHTML = '<b>' + this.feature.properties.Okres + '</b></br></br>' + wspNazwa +': ' + eval(props)  +'/5</br></br></br>';
+//document.getElementById("data").innerHTML
 }
 
 function unZoomCZ(e) {

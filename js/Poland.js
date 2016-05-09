@@ -94,8 +94,8 @@ if (!L.Browser.ie) {
 
 var props = 'e.target.feature.properties.'+wsp+'';
 
-	document.getElementById("data").innerHTML = '<b>' + e.target.feature.properties.NAME_ENG +'</b></br></br>' + wspNazwa +': </b>'  + eval(props)  +'</br>';		//docelowo pozbyć się eval - jest ponoć niebezpieczna pod względem zabezpieczeń	
-
+	info._div.innerHTML = '<b>' + e.target.feature.properties.NAME_ENG +'</b></br></br>' + wspNazwa +': </b>'  + eval(props)  +'</br>';		//docelowo pozbyć się eval - jest ponoć niebezpieczna pod względem zabezpieczeń	
+//document.getElementById("data").innerHTML
 
 	
 }
@@ -110,8 +110,8 @@ function resetHighlightPL(e) {
 		fillOpacity: 0.80,
 	});
   //  this.bringToBack();
-	document.getElementById("data").innerHTML = "<b>hover on region</b>";
-
+	info._div.innerHTML = "<b>hover on region</b>";
+//document.getElementById("data").innerHTML
     }
 
 
@@ -250,8 +250,8 @@ if (!L.Browser.ie) {
 	
 	var props = 'e.target.feature.properties.'+wsp+'';
 	
-	document.getElementById("data").innerHTML = '<b>' + this.feature.properties.NAME_PL +' '+ this.feature.properties.TYPE +'</b></br></br>' + wspNazwa +': </b>'  + eval(props)  +'</br></br></br>';
-	
+	info._div.innerHTML = '<b>' + this.feature.properties.NAME_PL +' '+ this.feature.properties.TYPE +'</b></br></br>' + wspNazwa +': </b>'  + eval(props)  +'</br></br></br>';
+//document.getElementById("data").innerHTML	
 }
 
 function unZoomPL(e) {

@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-  <script src="leaflet.js"></script>
-  <script src="leaflet.label.js"></script>
+  <script src="js/leaflet.js"></script>
+  <script src="js/leaflet.label.js"></script>
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -65,53 +65,54 @@
 			<div id="dim" class=""></div>
 
 			<div id="menu" class="window">
-				<div class="">
 
-					Choose Danger Index: <br><br>
+
+					Choose Danger Index:<br><br>
 					<div class="dropdown">
 						<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Ticks<b class="caret"></b></a>
 						<ul class="dropdown-menu dropdown-menu-form" role="menu">
-							<li><input id="radio1" type="radio" name="dane1" onclick="check(this.value)" value="LYME_DIS" checked="true"><label for="radio1">Castor bean tick - high resolution (CZ, PL)</label></li>
-							<li><input id="radio2" type="radio" name="dane1" onclick="check(this.value)" value="IXODES_R"><label for="radio2">Castor bean tick - low resolution (EUR)</label></li>
-							<li><input id="radio3" type="radio" name="dane1" onclick="check(this.value)" value="HYALOMMA"><label for="radio3">Hyalomma marginatum tick - low resolution (EUR)</label></li>
-						</ul>
-					</div></br>
+							<li><input id="radio1" type="radio" name="dane1" onclick="check(this.value)" value="LYME_DIS"><label for="radio1">Castor bean tick - high resolution (CZ, PL)</label><br><span id="id1"><a href="descriptions/IxodesRicinus.html">read more...</a></span></li>
+							<li><input id="radio3" type="radio" name="dane1" onclick="check(this.value)" value="IXODES_R"><label for="radio3">Castor bean tick - low resolution (EUR)</label><br><span id="id3"><a href="descriptions/IxodesRicinus.html">read more...</a></span></li>
+							<li><input id="radio2" type="radio" name="dane1" onclick="check(this.value)" value="HYALOMMA"><label for="radio2">Hyalomma marginatum tick - low resolution (EUR)</label><br><span id="id2"><a href="opisy/HYALOMMA.html">read more...</a></span></li>
 
-          <div class="dropdown">
+						</ul>
+					</div>
+
+					<div class="dropdown">
 						<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Mosquitoes<b class="caret"></b></a>
 						<ul class="dropdown-menu dropdown-menu-form" role="menu">
-							<li><input id="radio4" type="radio" name="dane1" onclick="check(this.value)" value="AEDES_ALBO"><label for="radio4">Tiger mosquito - low resolution (EUR)</label></li>
+							<li><input id="radio4" type="radio" name="dane1" onclick="check(this.value)" value="AEDES_ALBO"><label for="radio4">Tiger mosquito - low resolution (EUR)</label><br><span id="id4" ><a href="opisy/AEDES_ALBO.html">read more...</a></span></li>
 						</ul>
-					</div></br>
+					</div>
 
 					<div class="dropdown">
 						<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Plants<b class="caret"></b></a>
 						<ul class="dropdown-menu dropdown-menu-form" role="menu">
-							<li><input id="radio5" type="radio" name="dane1" onclick="check(this.value)" value="HOGWEED"><label for="radio5">Sosnowsky's&nbsphogweed - high resolution (PL)</label></li>
+							<li><input id="radio5" type="radio" name="dane1" onclick="check(this.value)" value="HOGWEED"><label for="radio5">Sosnowsky's&nbsphogweed - high resolution (PL)</label><br><span id="id5" ><a href="opisy/HOGWEED.html">read more...</a></span></li>
 						</ul>
-					</div></br>
+					</div>
 
 					<div class="dropdown">
 						<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Snakes<b class="caret"></b></a>
 						<ul class="dropdown-menu dropdown-menu-form" role="menu">
-							<li><input id="radio6" type="radio" name="dane1" onclick="check(this.value)" value="MACROVIPER"><label for="radio6">Milos viper - low resolution (EUR)</label></li>
-							<li><input id="radio7" type="radio" name="dane1" onclick="check(this.value)" value="V_XANTHINA"><label for="radio7">Rock viper - low resolution (EUR)</label></li>
-							<li><input id="radio8" type="radio" name="dane1" onclick="check(this.value)" value="V_AMMODYTE"><label for="radio8">Horned viper - low resolution (EUR)</label></li>
-							<li><input id="radio9" type="radio" name="dane1" onclick="check(this.value)" value="V_ASPIS"><label for="radio9">Asp viper - low resolution (EUR)</label></li>
-							<li><input id="radio10" type="radio" name="dane1" onclick="check(this.value)" value="V_BERUS"><label for="radio10">Common European viper - low resolution (EUR)</label></li>
-							<li><input id="radio11" type="radio" name="dane1" onclick="check(this.value)" value="V_LATASTEI"><label for="radio11">Latastes viper - low resolution (EUR)</label></li>
+							<li><input id="radio6" type="radio" name="dane1" onclick="check(this.value)" value="MACROVIPER"><label for="radio6">Milos viper - low resolution (EUR)</label><br><span  id="id6"><a href="opisy/MACROVIPER.html">read more...</a></span></li>
+							<li><input id="radio7" type="radio" name="dane1" onclick="check(this.value)" value="V_XANTHINA"><label for="radio7">Rock viper - low resolution (EUR)</label><br><span  id="id7"><a href="opisy/V_XANTHINA.html">read more...</a></span></li>
+							<li><input id="radio8" type="radio" name="dane1" onclick="check(this.value)" value="V_AMMODYTE"><label for="radio8">Horned viper - low resolution (EUR)</label><br><span id="id8"><a href="opisy/V_AMMODYTE.html">read more...</a></span></li>
+							<li><input id="radio9" type="radio" name="dane1" onclick="check(this.value)" value="V_ASPIS"><label for="radio9">Asp viper - low resolution (EUR)</label><br><span id="id9"><a href="opisy/V_ASPIS.html">read more...</a></span></li>
+							<li><input id="radio10" type="radio" name="dane1" onclick="check(this.value)" value="V_BERUS"><label for="radio10">Common European viper - low resolution (EUR)</label><br><span id="id10"><a href="opisy/V_BERUS.html">read more...</a></span></li>
+							<li><input id="radio11" type="radio" name="dane1" onclick="check(this.value)" value="V_LATASTEI"><label for="radio11">Latastes viper - low resolution (EUR)</label><br><span id="id11"><a href="opisy/V_LATASTEI.html">read more...</a></span></li>
 						</ul>
-					</div></br>
-          
-					<button onclick="init()" style="float: right;">Proceed</button>
-				</div>
+					</div>
+
+					<button type="button" onclick="init()" class="btn btn-default" data-toggle="tooltip" data-placement="left">Proceed</button>
+
 			</div>
 		</div>
 
     <div class="col-md-4"></div>
-    <div id="sideMenu" class="">
-	<div id="data" class=""></div>
-	<div id="info" class=""></div>
+    <div id="sideMenu" class="hidden">
+	<div id="data" class="hidden"></div>
+	<div id="info" class="hidden"></div>
 	</div>
 	</div>
 
