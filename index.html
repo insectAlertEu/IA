@@ -29,7 +29,7 @@
 <body>
 
 <nav class="navbar navbar-default">
-
+  <i class="fa fa-map-marker"></i>
     <div class="navbar-header">
       <a class="navbar-left" rel="home" href="#" title="logo">
         <img style="max-width:105px; padding-top: 5px; position:relative;"src="images/logo6.png"></a>
@@ -62,11 +62,12 @@
 	<div class="row">
 		<div class="col-md-8"></div>
 		<div id='map'>
+
 			<div id="dim" class=""></div>
 
 			<div id="menu" class="window">
 
-
+      <i class="fa fa-map-marker"></i>
 					Choose Danger Index:<br><br>
 					<div class="dropdown">
 						<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Ticks<b class="caret"></b></a>
@@ -84,15 +85,16 @@
 							<li><input id="radio4" type="radio" name="dane1" onclick="check(this.value)" value="AEDES_ALBO"><label for="radio4">Tiger mosquito - low resolution (EUR)</label><br><span id="id4" ><a href="opisy/AEDES_ALBO.html">read more...</a></span></li>
 						</ul>
 					</div>
-
+<p></p>
 					<div class="dropdown">
 						<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Plants<b class="caret"></b></a>
 						<ul class="dropdown-menu dropdown-menu-form" role="menu">
-							<li><input id="radio5" type="radio" name="dane1" onclick="check(this.value)" value="HOGWEED"><label for="radio5">Sosnowsky's&nbsphogweed - high resolution (PL)</label><br><span id="id5" ><a href="opisy/HOGWEED.html">read more...</a></span></li>
+							<li><input id="radio5" type="radio" name="dane1" onclick="check(this.value)" value="HOGWEED"><label for="radio5">Sosnowsky's&nbsphogweed - high resolution (PL)</label><br><span id="id5" ><a href="descriptions/HeracleumSosnowskyi.html">read more...</a></span></li>
 						</ul>
 					</div>
-
+<p></p>
 					<div class="dropdown">
+
 						<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Snakes<b class="caret"></b></a>
 						<ul class="dropdown-menu dropdown-menu-form" role="menu">
 							<li><input id="radio6" type="radio" name="dane1" onclick="check(this.value)" value="MACROVIPER"><label for="radio6">Milos viper - low resolution (EUR)</label><br><span  id="id6"><a href="opisy/MACROVIPER.html">read more...</a></span></li>
@@ -101,12 +103,15 @@
 							<li><input id="radio9" type="radio" name="dane1" onclick="check(this.value)" value="V_ASPIS"><label for="radio9">Asp viper - low resolution (EUR)</label><br><span id="id9"><a href="opisy/V_ASPIS.html">read more...</a></span></li>
 							<li><input id="radio10" type="radio" name="dane1" onclick="check(this.value)" value="V_BERUS"><label for="radio10">Common European viper - low resolution (EUR)</label><br><span id="id10"><a href="opisy/V_BERUS.html">read more...</a></span></li>
 							<li><input id="radio11" type="radio" name="dane1" onclick="check(this.value)" value="V_LATASTEI"><label for="radio11">Latastes viper - low resolution (EUR)</label><br><span id="id11"><a href="opisy/V_LATASTEI.html">read more...</a></span></li>
-						</ul>
+						</ul><br>
+
 					</div>
 
-					<button type="button" onclick="init()" class="btn btn-default" data-toggle="tooltip" data-placement="left">Proceed</button>
+					<input type="checkbox" id="locate" ><label id="locatelabel" data-toggle="tooltip" data-placement="bottom" for="locate">Show Your Location</label></input>
+					<button id="proceed" title="Select Danger Index" type="button" onclick="init()" class="btn btn-default" data-toggle="tooltip" data-placement="bottom">Proceed</button>
 
 			</div>
+
 		</div>
 
     <div class="col-md-4"></div>

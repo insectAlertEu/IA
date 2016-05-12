@@ -116,8 +116,8 @@ height: calc(100% - 83px);
 	margin-right:10px;
 	margin-top:10px;
 	font:bold 1.4vmin 'Roboto', sans-serif !important;
-	background: rgba(255, 255, 255, 0.9);	
-	
+	background: rgba(255, 255, 255, 0.9);
+
 }
 
 
@@ -130,7 +130,7 @@ height: calc(100% - 83px);
 	margin-right:10px;
 	margin-top:10px;
 	font-size: 1vw;
-	background: rgba(255, 255, 255, 0.9);	
+	background: rgba(255, 255, 255, 0.9);
 	line-height: 18px;
 	color: #555;
 }
@@ -208,7 +208,7 @@ label {
 	padding: 10px;
 	background: rgba(255, 255, 255, 0.9);
 	border-radius: 10px;
-	overflow: hidden;
+/*	overflow: hidden;*/
 	box-shadow: 0 0 15px rgba(0,0,0,0.2);
 	color: #555;
 
@@ -221,8 +221,8 @@ label {
 
 .window.collapsed {
 	position: absolute;
-	overflow: hidden;
-	overflow-x: hidden;
+/*	overflow: hidden;*/
+/*	overflow-x: hidden;*/
 	left: 0;
 	top: 0;
 	margin-left:10px;
@@ -235,6 +235,8 @@ label {
 .window.collapsed button {
 	display: none;
 }
+
+
 
 .loading {
 	display: none;
@@ -333,9 +335,9 @@ input[type=radio]:not(old):checked + label{
     overflow-y: scroll;
 }
 
-/* Dropdown Button 
+/* Dropdown Button
 .dropbtn {
-    
+
     color: black;
 
     cursor: pointer;
@@ -403,14 +405,14 @@ input#radio1:checked ~ span#id1 a{
 	max-height:50px;
 	-webkit-transition: max-height 0.5s;
 	-moz-transition: max-height 0.5s;
-	transition: max-height 0.5s;	
+	transition: max-height 0.5s;
 }
 
 input#radio2:checked ~ span#id2 a{
 	max-height:50px;
 	-webkit-transition: max-height 0.5s;
 	-moz-transition: max-height 0.5s;
-	transition: max-height 0.5s;	
+	transition: max-height 0.5s;
 
 }
 
@@ -418,61 +420,81 @@ input#radio3:checked ~ span#id3 a{
 	max-height:50px;
 	-webkit-transition: max-height 0.5s;
 	-moz-transition: max-height 0.5s;
-	transition: max-height 0.5s;	
+	transition: max-height 0.5s;
 }
 
 input#radio4:checked ~ span#id4 a{
 	max-height:50px;
 	-webkit-transition: max-height 0.5s;
 	-moz-transition: max-height 0.5s;
-	transition: max-height 0.5s;	
+	transition: max-height 0.5s;
 }
 
 input#radio5:checked ~ span#id5 a{
 	max-height:50px;
 	-webkit-transition: max-height 0.5s;
 	-moz-transition: max-height 0.5s;
-	transition: max-height 0.5s;	
+	transition: max-height 0.5s;
 }
 
 input#radio6:checked ~ span#id6 a{
 	max-height:50px;
 	-webkit-transition: max-height 0.5s;
 	-moz-transition: max-height 0.5s;
-	transition: max-height 0.5s;	
+	transition: max-height 0.5s;
 }
 
 input#radio7:checked ~ span#id7 a{
 	max-height:50px;
 	-webkit-transition: max-height 0.5s;
 	-moz-transition: max-height 0.5s;
-	transition: max-height 0.5s;	
+	transition: max-height 0.5s;
 }
 
 input#radio8:checked ~ span#id8 a{
 	max-height:50px;
 	-webkit-transition: max-height 0.5s;
 	-moz-transition: max-height 0.5s;
-	transition: max-height 0.5s;	
+	transition: max-height 0.5s;
 }
 
 input#radio9:checked ~ span#id9 a{
 	max-height:50px;
 	-webkit-transition: max-height 0.5s;
 	-moz-transition: max-height 0.5s;
-	transition: max-height 0.5s;	
+	transition: max-height 0.5s;
 }
 
 input#radio10:checked ~ span#id10 a{
 	max-height:50px;
 	-webkit-transition: max-height 0.5s;
 	-moz-transition: max-height 0.5s;
-	transition: max-height 0.5s;	
+	transition: max-height 0.5s;
 }
 
 input#radio11:checked ~ span#id11 a{
 	max-height:50px;
 	-webkit-transition: max-height 0.5s;
 	-moz-transition: max-height 0.5s;
-	transition: max-height 0.5s;	
+	transition: max-height 0.5s;
+}
+
+input[type=checkbox]{
+ 	margin  : 0;
+	padding : 0;
+	opacity : 0;
+}
+
+label#locatelabel{
+	display      : inline;
+	margin-left  : -0.5em;
+	padding-left : 1.5em;
+	background   : url('../images/checks.png') no-repeat left center;
+	background-size: contain;
+	margin-bottom: 0em !important;
+}
+
+input#locate:checked  ~ label#locatelabel{
+	background   : url('../images/checks2.png') no-repeat 0 center;
+	background-size: contain;
 }
