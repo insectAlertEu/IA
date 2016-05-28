@@ -129,9 +129,11 @@ if (!L.Browser.ie) {
 
 	
 	var props = 'e.target.feature.properties.'+wsp+'';
-	
+	var noSpaces = wspNazwa.replace(/\s/g, '');
+	var userObserve = 'e.target.feature.properties.'+noSpaces+'';
 
-	info._div.innerHTML = '<b>' + this.feature.properties.NAME_ENG +'</b></br></br>' + wspNazwa +': '  + eval(props)  +'</br>'; //  + '<object type="text/html" data="'+plik+'"></object>';
+
+	info._div.innerHTML = '<b>' + this.feature.properties.NAME_ENG +'</b><br><br>' + wspNazwa +': '  + eval(props)  +'<br>'+'User observations: '+eval(userObserve); //  + '<object type="text/html" data="'+plik+'"></object>';
 	//document.getElementById("data").innerHTML
 }
 
@@ -153,12 +155,29 @@ function resetHighlightEU(e) {
 function zoomToFeatureEU(e) {
 	
 		map.fitBounds(this.getBounds());	
-		
-	
-	
+
 }	
 
+
 function onEachFeatureEU(feature, layer) {
+
+userData = userJson.data.filter(function (el) {
+		return el.Region === feature.properties.NAME_ENG; 
+	});
+	
+	for (var key in slownikWskaznikow) {
+		if (slownikWskaznikow.hasOwnProperty(key)) {
+			var prop = userData.filter(function (el) {
+				return el.Index === slownikWskaznikow[key]; 
+			});
+			
+			var noSpaces = slownikWskaznikow[key].replace(/\s/g, "");
+			feature.properties[noSpaces]=prop.length;
+			
+		}
+	}	
+
+
     layer.on({
 		mouseover: highlightFeatureEU,
 		mouseout: resetHighlightEU,

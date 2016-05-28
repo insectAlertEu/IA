@@ -22,6 +22,12 @@ L.control.scale({position: 'bottomright'}).addTo(map);	//ręcznie dodane kontrol
 
 document.getElementById("data").innerHTML = '<b>choose data to show</b>';	//wyświetlany tekst w oknie z danymi po prawej
 
+var userJson = [];
+var userData;
+
+
+
+
 
 var group = new L.featureGroup();	//wszystkie aktualnie wyświetlane geojsony
 
@@ -94,12 +100,15 @@ function onLocationError(e) {
 }
 map.on('locationerror', onLocationError);
 
+
+
+
 var slownikWskaznikow = {				//przypisanie nazw dla zmiennych Danger Indexów
 	"LYME_DIS" : "Castor bean tick",
 	"HYALOMMA" : "Hyalomma marginatum tick",
 	"IXODES_R" : "Castor bean tick",
 	"AEDES_ALBO" : "Tiger mosquito",
-	"HOGWEED" : "Sosnowsky's hogweed",
+	"HOGWEED" : "Sosnowsky hogweed",
 	"MACROVIPER" : "Milos viper",
 	"V_XANTHINA" : "Rock viper",
 	"V_AMMODYTE" : "Horned viper",
@@ -107,6 +116,10 @@ var slownikWskaznikow = {				//przypisanie nazw dla zmiennych Danger Indexów
 	"V_BERUS" : "Common European viper",
 	"V_LATASTEI" : "Latastes viper",
 };
+
+
+
+
 
 var wsp;			//aktualnie wybrany checkbox
 var wspNazwa;		//nazwa wybranego Danger Indexu
@@ -156,6 +169,9 @@ function check(radioValue) {
 		if (typeof regionCZ != "undefined") {
 			map.removeLayer(regionCZ);
 		}
+		if (typeof regionHog != "undefined") {
+			map.removeLayer(regionHog);
+		}		
 
 		if (radioValue == 'LYME_DIS' ){
 
@@ -168,22 +184,56 @@ function check(radioValue) {
 			group.addLayer(Poland);
 			Czech.addTo(map);
 			group.addLayer(Czech);
+			Belarus.addTo(map);
+			group.addLayer(Belarus);
 
 			WojPL.eachLayer(function (layer) {
 				layer.setStyle(styleLymePL);
 			});
 			Poland.setStyle(styleLymePL);
+			
 
 			WojCZ.eachLayer(function (layer) {
 				layer.setStyle(styleLymeCZ);
 			});
 			Czech.setStyle(styleLymeCZ);
+			
+			Belarus.setStyle(styleLymeBLR);
+
 
 			if (typeof clickRegion != "undefined") {
 				map.addLayer(clickRegion);
-				Poland.resetStyle(clickRegion);
-				Czech.resetStyle(clickRegion);
+				// Poland.resetStyle(clickRegion);
+				// Czech.resetStyle(clickRegion);
 			}
+		} else {
+			map.removeLayer(Poland);
+			group.removeLayer(Poland);
+			map.removeLayer(Czech);
+			group.removeLayer(Czech);
+			map.removeLayer(Belarus);
+			group.removeLayer(Belarus);
+		}
+				
+		if (radioValue == 'HOGWEED' ) {
+			document.getElementById("info").innerHTML = "";
+
+			hogweedPoland.addTo(map);
+			group.addLayer(hogweedPoland);
+
+			WojPLhog.eachLayer(function (layer) {
+				layer.setStyle(hogweed);
+			});
+			hogweedPoland.setStyle(hogweed);
+
+			
+			if (typeof clickRegionHog != "undefined") {
+				map.addLayer(clickRegionHog);
+			}
+			
+		} else {
+				map.removeLayer(hogweedPoland);
+				group.removeLayer(hogweedPoland);
 		}
 
 		if (radioValue == 'HYALOMMA' ){
@@ -192,11 +242,7 @@ function check(radioValue) {
 			Europe.addTo(map);
 			group.addLayer(Europe);
 
-			map.removeLayer(Poland);
-			map.removeLayer(Czech);
-			group.removeLayer(Poland);
-			group.removeLayer(Czech);
-
+					
 			Europe.setStyle(styleEUHYA);
 		}
 
@@ -206,12 +252,7 @@ function check(radioValue) {
 			Europe.addTo(map);
 			group.addLayer(Europe);
 
-
-			map.removeLayer(Poland);
-			map.removeLayer(Czech);
-			group.removeLayer(Poland);
-			group.removeLayer(Czech);
-
+			
 			Europe.setStyle(styleEUIXO);
 		}
 
@@ -220,13 +261,10 @@ function check(radioValue) {
 
 			Europe.addTo(map);
 			group.addLayer(Europe);
-
-			map.removeLayer(Poland);
-			map.removeLayer(Czech);
-			group.removeLayer(Poland);
-			group.removeLayer(Czech);
-
+			
 			Europe.setStyle(styleEUAED);
+
+			
 		}
 		else if (radioValue == 'MACROVIPER' ) {
 			document.getElementById("info").innerHTML = "";
@@ -234,11 +272,7 @@ function check(radioValue) {
 			Europe.addTo(map);
 			group.addLayer(Europe);
 
-			map.removeLayer(Poland);
-			map.removeLayer(Czech);
-			group.removeLayer(Poland);
-			group.removeLayer(Czech);
-
+					
 			Europe.setStyle(styleEUMV);
 		}
 		else if (radioValue == 'V_XANTHINA' ) {
@@ -247,11 +281,7 @@ function check(radioValue) {
 			Europe.addTo(map);
 			group.addLayer(Europe);
 
-			map.removeLayer(Poland);
-			map.removeLayer(Czech);
-			group.removeLayer(Poland);
-			group.removeLayer(Czech);
-
+						
 			Europe.setStyle(styleEUVX);
 		}
 		else if (radioValue == 'V_AMMODYTE' ) {
@@ -260,11 +290,7 @@ function check(radioValue) {
 			Europe.addTo(map);
 			group.addLayer(Europe);
 
-			map.removeLayer(Poland);
-			map.removeLayer(Czech);
-			group.removeLayer(Poland);
-			group.removeLayer(Czech);
-
+					
 			Europe.setStyle(styleEUVAM);
 		}
 		else if (radioValue == 'V_ASPIS' ) {
@@ -273,11 +299,8 @@ function check(radioValue) {
 			Europe.addTo(map);
 			group.addLayer(Europe);
 
-			map.removeLayer(Poland);
-			map.removeLayer(Czech);
-			group.removeLayer(Poland);
-			group.removeLayer(Czech);
-
+		
+			
 			Europe.setStyle(styleEUVAS);
 		}
 		else if (radioValue == 'V_BERUS' ) {
@@ -286,11 +309,7 @@ function check(radioValue) {
 			Europe.addTo(map);
 			group.addLayer(Europe);
 
-			map.removeLayer(Poland);
-			map.removeLayer(Czech);
-			group.removeLayer(Poland);
-			group.removeLayer(Czech);
-
+					
 			Europe.setStyle(styleEUVB);
 		}
 		else if (radioValue == 'V_LATASTEI' ) {
@@ -299,11 +318,7 @@ function check(radioValue) {
 			Europe.addTo(map);
 			group.addLayer(Europe);
 
-			map.removeLayer(Poland);
-			map.removeLayer(Czech);
-			group.removeLayer(Poland);
-			group.removeLayer(Czech);
-
+					
 			Europe.setStyle(styleEUVL);
 		}
 
@@ -312,26 +327,6 @@ function check(radioValue) {
 			group.removeLayer(Europe);
 		}
 
-		if (radioValue == 'HOGWEED' ) {
-			document.getElementById("info").innerHTML = "";
-
-			Poland.addTo(map);
-			group.addLayer(Poland);
-
-			Poland.setStyle(noData);
-
-			if (map.hasLayer(hogweedPoland) != true) {
-				hogweedPoland.addTo(map);
-			}
-
-			map.removeLayer(Czech);
-			group.removeLayer(Czech);
-
-		} else {
-			if (map.hasLayer(hogweedPoland)){
-				map.removeLayer(hogweedPoland);
-			}
-		}
 
 
 		if (jQuery.isEmptyObject(group.getLayers()) == false){
@@ -376,11 +371,11 @@ legend.update = function () {
 
 	if (wsp == "LYME_DIS"){
 		grades = [0, 126, 251, 376, 501, 626, 751, 876, -1];
-		labels = ["<b>low risk</b>", "", "", "", "", "", "", "<b>high risk</b></br>", "<b>no data</b>"];
+		labels = ["<b>low risk</b>", "", "", "", "", "", "", "<b>high risk</b><br>", "<b>no data</b>"];
 	}
 	else {
 		grades = [0, 751, -1];
-		labels = ["<b>safe zone</b>", "<b>danger zone</b></br>", "<b>no data</b>"];
+		labels = ["<b>safe zone</b>", "<b>danger zone</b><br>", "<b>no data</b>"];
 	}
 
 	this.div.innerHTML = '';
@@ -403,3 +398,115 @@ map.on('zoomend', function() {
 	labels.addTo(map);
 
 });
+
+$.ajaxSetup({ cache: false });
+
+// jQuery.ajax({
+	// type: "GET",
+	// url: 'log.json',
+	// dataType: 'json',
+	// error: function (XMLHttpRequest, textStatus, errorThrown) {console.log('error ', errorThrown);},
+// })
+// .done(function( script, textStatus ) {
+    // console.log( textStatus );
+	// userJson = script;
+	
+	
+	// jQuery.ajax({
+		// type: "GET",
+		// url: 'js/Poland.js',
+		// dataType: 'script',
+		// error: function (XMLHttpRequest, textStatus, errorThrown) {console.log('error ', errorThrown);},
+	// })
+	// .done(function( script, textStatus ) {
+		// console.log( textStatus );
+
+		// jQuery.ajax({
+			// type: "GET",
+			// url: 'js/Czech.js',
+			// dataType: 'script',
+			// error: function (XMLHttpRequest, textStatus, errorThrown) {console.log('error ', errorThrown);},
+		// })
+		// .done(function( script, textStatus ) {
+			// console.log( textStatus );
+
+		// })
+	
+		// jQuery.ajax({
+			// type: "GET",
+			// url: 'js/Belarus.js',
+			// dataType: 'script',
+			// error: function (XMLHttpRequest, textStatus, errorThrown) {console.log('error ', errorThrown);},
+		// })
+		// .done(function( script, textStatus ) {
+			// console.log( textStatus );
+
+		// })
+	
+	
+		// jQuery.ajax({
+			// type: "GET",
+			// url: 'js/Europe.js',
+			// dataType: 'script',
+			// error: function (XMLHttpRequest, textStatus, errorThrown) {console.log('error ', errorThrown);},
+		// })
+		// .done(function( script, textStatus ) {
+			// console.log( textStatus );
+
+		// })
+
+
+	
+		
+	// })
+// });
+
+
+
+
+
+
+var jqXHR = $.getJSON("log.json", function(json) {
+    userJson = json;
+})
+.done(function() {
+    
+		$.getScript("js/Poland.js")
+		.done(function( script, textStatus ) {
+			console.log( textStatus );
+			
+					$.getScript("js/Czech.js")
+				.done(function( script, textStatus ) {
+					console.log( textStatus );
+
+				  })
+				  .fail(function( jqxhr, settings, exception ) {
+					console.log( jqxhr );
+					console.log( settings );
+					console.log( exception );
+				});
+
+
+				$.getScript("js/Belarus.js")
+				.done(function( script, textStatus ) {
+					console.log( textStatus );
+				  })
+				  .fail(function( jqxhr, settings, exception ) {
+					console.log( exception );
+				});
+
+				$.getScript("js/Europe.js")
+				.done(function( script, textStatus ) {
+					console.log( textStatus );
+				  })
+				  .fail(function( jqxhr, settings, exception ) {
+					console.log( exception );
+				});
+		  })
+		  .fail(function( jqxhr, settings, exception ) {
+			console.log( exception );
+		});
+
+		
+  });
+

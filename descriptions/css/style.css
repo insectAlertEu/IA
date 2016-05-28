@@ -13,6 +13,10 @@ h2 {
 	text-align: left;
 }
 
+h3 {
+	text-align: center;
+}
+
 p {
 	text-align: justify;
 }
@@ -22,14 +26,14 @@ table#descTable {
 
 table#statusTable {
     width:80%;
-		margin-left: auto;
-		margin-right: auto;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 table#statusTable tr:nth-child(even) {
     background-color: #99e699;
-		text-align: center;
-		font-weight: bold;
+	text-align: center;
+	font-weight: bold;
 }
 table#statusTable tr:nth-child(odd) {
    background-color:#adebad;
@@ -38,8 +42,8 @@ table#statusTable tr:nth-child(odd) {
 table#statusTable th	{
     background-color: black;
     color: white;
-		padding: 5px;
-		text-align: center;
+	padding: 5px;
+	text-align: center;
 }
 
 table#descTable td {
@@ -49,7 +53,7 @@ table#descTable td {
 
 }
 table#statusTable td	{
-		padding: 10px;
+	padding: 10px;
 }
 
 img.big {
@@ -57,7 +61,7 @@ img.big {
 	margin-left: auto;
 	margin-right: auto;
 	padding: 2px;
-  background-color: #000000;
+	background-color: #000000;
 	position: center;
 	width:100%;
 	max-width: 600px;
@@ -67,7 +71,7 @@ img.big {
 img.small {
 
 	float: left;
-  margin: 5px 5px 5px 5px;
+	margin: 2px 20px 2px 15px;
 
 }
 

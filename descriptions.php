@@ -11,20 +11,15 @@
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-  <script src="js/leaflet.js"></script>
-  <script src="js/leaflet.label.js"></script>  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> 
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  
-  <script type="text/javascript" src="geojson/Poland.geojson"></script>  
-  <script type="text/javascript" src="geojson/hogweedPoland.geojson"></script>  
 </head>
 <body>
 
 <nav class="navbar navbar-default">
 
     <div class="navbar-header">
-      <a class="navbar-left" rel="home" href="#" title="logo">
+      <a class="navbar-left" rel="home" href="index.html" title="logo">
         <img style="max-width:105px; padding-top: 5px; position:relative;"src="images/logo6.png"></a>
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
@@ -36,10 +31,13 @@
 
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-		<li><a href="index.html">Project</a></li>
-		<li class="active"><a href="observation.html">Add observation</a></li>
+        <li><a href="index.html">Project</a></li>
+		<!--<li><a href="observation.php">Add observation</a></li>-->
+		<li class="active"><a href="descriptions.php">Knowledge Base</a></li>
+		<li><a href="howtouse.html">How to use</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="status.html">Status</a></li>				
+
       </ul>
       <!-- <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -52,24 +50,26 @@
 
 <div class="container">
   <div class="row">
-    
-	<form action="" method="post">
-	<input type="text" id="result" value=""/>
-	<select id="myselect" name="myselect" onchange="getParameterByName" ><option selected="selected">blank</option><option>asd</option></select>
-	</form>
-</div>
-<script type="text/javascript" src="js/Poland.js"></script>
-<script>
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    
-	console.log(url);
+    <div class="col-md-12"></div>
+    <div class="descriptions">
+	
+	<h1>Descriptions for available Danger Indexes</h1>
+
+	<p><?php
+
+$directory = "descriptions/";
+$phpfiles = glob($directory . "*.html");
+
+foreach($phpfiles as $phpfile)
+{
+$indexName = preg_replace('/(?<!\ )[A-Z]/', ' $0', $phpfile);	
+echo "<a href=$phpfile>".basename($indexName, ".html")."</a><br>";
 }
-</script>
+   
+
+?></p>
 	
-	
-	
-	
+    <br><h2><a href="index.html" style="text-decoration:none; color: #28004d"><span style="color: #e60000">Back to map</span></h2></div>
 </div>
 </div>
 

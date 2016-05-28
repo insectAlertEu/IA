@@ -14,7 +14,7 @@
 
   <script src="js/leaflet.js"></script>
   <script src="js/leaflet.label.js"></script>
-
+  <script src="js/leaflet.ajax.min.js"></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
@@ -24,6 +24,10 @@
   <script type="text/javascript" src="geojson/hogweedPoland.geojson"></script>
   <script type="text/javascript" src="geojson/Czech.geojson"></script>
   <script type="text/javascript" src="geojson/Europe.geojson"></script>
+  <script type="text/javascript" src="geojson/Belarus.geojson"></script>
+  
+  
+  
 </head>
 
 <body>
@@ -31,8 +35,8 @@
 <nav class="navbar navbar-default">
   <i class="fa fa-map-marker"></i>
     <div class="navbar-header">
-      <a class="navbar-left" rel="home" href="#" title="logo">
-        <img style="max-width:105px; padding-top: 5px; position:relative;"src="images/logo6.png"></a>
+      <a class="navbar-left" rel="home" href="index.html" title="logo">
+        <img style="max-width:105px; padding-top: 5px; position:relative;" src="images/logo6.png"></a>
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -44,8 +48,10 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li class="active"><a href="#">Project</a></li>
-        <li><a href="observation.html">Add observation</a></li>
-        <li><a href="about.html">About</a></li>
+		<!--<li><a href="observation.php">Add observation</a></li> -->
+        <li><a href="descriptions.php">Knowledge Base</a></li>
+        <li><a href="howtouse.html">How to use</a></li>
+		<li><a href="about.html">About</a></li>
         <li><a href="status.html">Status</a></li>
 
       </ul>
@@ -72,9 +78,9 @@
 					<div class="dropdown">
 						<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Ticks<b class="caret"></b></a>
 						<ul class="dropdown-menu dropdown-menu-form" role="menu">
-							<li><input id="radio1" type="radio" name="dane1" onclick="check(this.value)" value="LYME_DIS"><label for="radio1">Castor bean tick - high resolution (CZ, PL)</label><br><span id="id1"><a href="descriptions/IxodesRicinus.html">read more...</a></span></li>
-							<li><input id="radio3" type="radio" name="dane1" onclick="check(this.value)" value="IXODES_R"><label for="radio3">Castor bean tick - low resolution (EUR)</label><br><span id="id3"><a href="descriptions/IxodesRicinus.html">read more...</a></span></li>
-							<li><input id="radio2" type="radio" name="dane1" onclick="check(this.value)" value="HYALOMMA"><label for="radio2">Hyalomma marginatum tick - low resolution (EUR)</label><br><span id="id2"><a href="descriptions/HyalommaMarginatum.html">read more...</a></span></li>
+							<li><input id="radio1" type="radio" name="dane1" onclick="check(this.value)" value="LYME_DIS"><label for="radio1">Castor bean tick - high resolution (CZ, PL, BLR)</label><br><span id="id1"><a href="descriptions/IxodesRicinusTick.html">read more...</a></span></li>
+							<li><input id="radio3" type="radio" name="dane1" onclick="check(this.value)" value="IXODES_R"><label for="radio3">Castor bean tick - low resolution (EUR)</label><br><span id="id3"><a href="descriptions/IxodesRicinusTick.html">read more...</a></span></li>
+							<li><input id="radio2" type="radio" name="dane1" onclick="check(this.value)" value="HYALOMMA"><label for="radio2">Hyalomma marginatum tick - low resolution (EUR)</label><br><span id="id2"><a href="descriptions/HyalommaMarginatumTick.html">read more...</a></span></li>
 
 						</ul>
 					</div>
@@ -89,7 +95,7 @@
 					<div class="dropdown">
 						<a class="dropdown-toggle btn" data-toggle="dropdown" href="#">Plants<b class="caret"></b></a>
 						<ul class="dropdown-menu dropdown-menu-form" role="menu">
-							<li><input id="radio5" type="radio" name="dane1" onclick="check(this.value)" value="HOGWEED"><label for="radio5">Sosnowsky's&nbsphogweed - high resolution (PL)</label><br><span id="id5" ><a href="descriptions/HeracleumSosnowskyi.html">read more...</a></span></li>
+							<li><input id="radio5" type="radio" name="dane1" onclick="check(this.value)" value="HOGWEED"><label for="radio5">Sosnowsky's&nbsphogweed - high resolution (PL)</label><br><span id="id5" ><a href="descriptions/HeracleumSosnowskyiPlant.html">read more...</a></span></li>
 						</ul>
 					</div>
 <p></p>
@@ -129,42 +135,6 @@
 </div> -->
 
 <script type="text/javascript" src="js/init.js"></script>
-
-<script type="text/javascript" src="geojson/PL/Lower Silesian Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Kuyavian-Pomeranian Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Lodz Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Lublin Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Lubusz Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Lesser Poland Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Masovian Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Opole Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Podkarpackie Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Podlaskie Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Pomeranian Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Silesian Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Swietokrzyskie Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Warmian-Masurian Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/Greater Poland Voivodeship.geojson"></script>
-<script type="text/javascript" src="geojson/PL/West Pomeranian Voivodeship.geojson"></script>
-
-<script type="text/javascript" src="geojson/CZ/Central Bohemian.geojson"></script>
-<script type="text/javascript" src="geojson/CZ/Hradec Kralove.geojson"></script>
-<script type="text/javascript" src="geojson/CZ/Kralovy Vary.geojson"></script>
-<script type="text/javascript" src="geojson/CZ/Liberec.geojson"></script>
-<script type="text/javascript" src="geojson/CZ/Moravian Silesian.geojson"></script>
-<script type="text/javascript" src="geojson/CZ/Olomouc Region.geojson"></script>
-<script type="text/javascript" src="geojson/CZ/Pardubice Region.geojson"></script>
-<script type="text/javascript" src="geojson/CZ/Plzen Region.geojson"></script>
-<script type="text/javascript" src="geojson/CZ/Prague.geojson"></script>
-<script type="text/javascript" src="geojson/CZ/South Bohemian.geojson"></script>
-<script type="text/javascript" src="geojson/CZ/South Moravian.geojson"></script>
-<script type="text/javascript" src="geojson/CZ/Usti Nad Labem.geojson"></script>
-<script type="text/javascript" src="geojson/CZ/Vysocina Region.geojson"></script>
-<script type="text/javascript" src="geojson/CZ/Zlin Region.geojson"></script>
-
-<script type="text/javascript" src="js/Poland.js"></script>
-<script type="text/javascript" src="js/Czech.js"></script>
-<script type="text/javascript" src="js/Europe.js"></script>
 
 </div>
 

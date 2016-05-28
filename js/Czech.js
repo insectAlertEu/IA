@@ -38,8 +38,11 @@ if (!L.Browser.ie) {
 	// var plik = "opisy/"+this.feature.properties.NAME_ENG+".html";
 	//var props = 'e.target.feature.properties.'+wsp+'';
 	var props = 'e.target.feature.properties.LymeB2012';
+	var noSpaces = wspNazwa.replace(/\s/g, '');
+	var userObserve = 'e.target.feature.properties.'+noSpaces+'';
 
-	info._div.innerHTML = '<b>' + this.feature.properties.NAME_ENG +'</b></br></br>' + wspNazwa +': '  + eval(props)  +'/5</br>'; //  + '<object type="text/html" data="'+plik+'"></object>';
+
+	info._div.innerHTML = '<b>' + this.feature.properties.NAME_ENG +'</b><br><br>' + wspNazwa +': '  + eval(props)  +'/5<br>'+'User observations: '+eval(userObserve); //  + '<object type="text/html" data="'+plik+'"></object>';
 //document.getElementById("data").innerHTML	
 }
 
@@ -91,11 +94,28 @@ function zoomToFeatureCZ(e) {
 			layer.bringToBack()
 	
 		});
-	
+	console.log(regionCZ);
 	
 }	
 
 function onEachFeatureCZ(feature, layer) {
+
+	userData = userJson.data.filter(function (el) {
+		return el.Region === feature.properties.NAME_ENG; 
+	});
+	
+	for (var key in slownikWskaznikow) {
+		if (slownikWskaznikow.hasOwnProperty(key)) {
+			var prop = userData.filter(function (el) {
+				return el.Index === slownikWskaznikow[key]; 
+			});
+			
+			var noSpaces = slownikWskaznikow[key].replace(/\s/g, "");
+			feature.properties[noSpaces]=prop.length;
+			
+		}
+	}	
+
     layer.on({
 		mouseover: highlightFeatureCZ,
 		mouseout: resetHighlightCZ,
@@ -105,21 +125,38 @@ function onEachFeatureCZ(feature, layer) {
 }
 
 
+var CentralBohemian= new L.GeoJSON.AJAX('geojson/CZ/Central Bohemian.geojson', {onEachFeature:onEachFeatureCZregion});
+var HradecKralove = new L.GeoJSON.AJAX('geojson/CZ/Hradec Kralove.geojson',  {onEachFeature: onEachFeatureCZregion});
+var KralovyVary = new L.GeoJSON.AJAX('geojson/CZ/Kralovy Vary.geojson',  {onEachFeature: onEachFeatureCZregion});
+var Liberec = new L.GeoJSON.AJAX('geojson/CZ/Liberec.geojson',  {onEachFeature: onEachFeatureCZregion});
+var MoravianSilesian = new L.GeoJSON.AJAX('geojson/CZ/Moravian Silesian.geojson',  {onEachFeature: onEachFeatureCZregion});
+var OlomoucRegion = new L.GeoJSON.AJAX('geojson/CZ/Olomouc Region.geojson',  {onEachFeature: onEachFeatureCZregion});
+var PardubiceRegion = new L.GeoJSON.AJAX('geojson/CZ/Pardubice Region.geojson',  {onEachFeature: onEachFeatureCZregion});
+var PlzenRegion = new L.GeoJSON.AJAX('geojson/CZ/Plzen Region.geojson',  {onEachFeature: onEachFeatureCZregion});
+var Prague = new L.GeoJSON.AJAX('geojson/CZ/Prague.geojson',  {onEachFeature: onEachFeatureCZregion});
+var SouthBohemian = new L.GeoJSON.AJAX('geojson/CZ/South Bohemian.geojson',  {onEachFeature: onEachFeatureCZregion});
+var SouthMoravian = new L.GeoJSON.AJAX('geojson/CZ/South Moravian.geojson',  {onEachFeature: onEachFeatureCZregion});
+var UstinadLabem = new L.GeoJSON.AJAX('geojson/CZ/Usti Nad Labem.geojson',  {onEachFeature: onEachFeatureCZregion});
+var VysocinaRegion = new L.GeoJSON.AJAX('geojson/CZ/Vysocina Region.geojson',  {onEachFeature: onEachFeatureCZregion});
+var ZlinRegion = new L.GeoJSON.AJAX('geojson/CZ/Zlin Region.geojson',  {onEachFeature: onEachFeatureCZregion});
 
-var CentralBohemian = L.geoJson(CentralBohemian,  {onEachFeature: onEachFeature});
-var HradecKralove = L.geoJson(HradecKralove,  {onEachFeature: onEachFeature});
-var KralovyVary = L.geoJson(KralovyVary,  {onEachFeature: onEachFeature});
-var Liberec = L.geoJson(Liberec,  {onEachFeature: onEachFeature});
-var MoravianSilesian = L.geoJson(MoravianSilesian,  {onEachFeature: onEachFeature});
-var OlomoucRegion = L.geoJson(OlomoucRegion,  {onEachFeature: onEachFeature});
-var PardubiceRegion = L.geoJson(PardubiceRegion,  {onEachFeature: onEachFeature});
-var PlzenRegion = L.geoJson(PlzenRegion,  {onEachFeature: onEachFeature});
-var Prague = L.geoJson(Prague,  {onEachFeature: onEachFeature});
-var SouthBohemian = L.geoJson(SouthBohemian,  {onEachFeature: onEachFeature});
-var SouthMoravian = L.geoJson(SouthMoravian,  {onEachFeature: onEachFeature});
-var UstinadLabem = L.geoJson(UstinadLabem,  {onEachFeature: onEachFeature});
-var VysocinaRegion = L.geoJson(VysocinaRegion,  {onEachFeature: onEachFeature});
-var ZlinRegion = L.geoJson(ZlinRegion,  {onEachFeature: onEachFeature});
+
+
+
+// var CentralBohemian = L.geoJson(CentralBohemian,  {onEachFeature: onEachFeatureCZregion});
+// var HradecKralove = L.geoJson(HradecKralove,  {onEachFeature: onEachFeatureCZregion});
+// var KralovyVary = L.geoJson(KralovyVary,  {onEachFeature: onEachFeatureCZregion});
+// var Liberec = L.geoJson(Liberec,  {onEachFeature: onEachFeatureCZregion});
+// var MoravianSilesian = L.geoJson(MoravianSilesian,  {onEachFeature: onEachFeatureCZregion});
+// var OlomoucRegion = L.geoJson(OlomoucRegion,  {onEachFeature: onEachFeatureCZregion});
+// var PardubiceRegion = L.geoJson(PardubiceRegion,  {onEachFeature: onEachFeatureCZregion});
+// var PlzenRegion = L.geoJson(PlzenRegion,  {onEachFeature: onEachFeatureCZregion});
+// var Prague = L.geoJson(Prague,  {onEachFeature: onEachFeatureCZregion});
+// var SouthBohemian = L.geoJson(SouthBohemian,  {onEachFeature: onEachFeatureCZregion});
+// var SouthMoravian = L.geoJson(SouthMoravian,  {onEachFeature: onEachFeatureCZregion});
+// var UstinadLabem = L.geoJson(UstinadLabem,  {onEachFeature: onEachFeatureCZregion});
+// var VysocinaRegion = L.geoJson(VysocinaRegion,  {onEachFeature: onEachFeatureCZregion});
+// var ZlinRegion = L.geoJson(ZlinRegion,  {onEachFeature: onEachFeatureCZregion});
 
 
 
@@ -159,7 +196,11 @@ if (!L.Browser.ie) {
 }
 	
 	var props = 'e.target.feature.properties.LymeB2012';
-	info._div.innerHTML = '<b>' + this.feature.properties.Okres + '</b></br></br>' + wspNazwa +': ' + eval(props)  +'/5</br></br></br>';
+	var noSpaces = wspNazwa.replace(/\s/g, '');
+	var userObserve = 'e.target.feature.properties.'+noSpaces+'';
+	
+
+	info._div.innerHTML = '<b>' + this.feature.properties.Okres + '</b><br><br>' + wspNazwa +': ' + eval(props)  +'/5<br>'+'User observations: '+eval(userObserve);
 //document.getElementById("data").innerHTML
 }
 
@@ -175,16 +216,36 @@ function unZoomCZ(e) {
 	map.fitBounds(Czech.getBounds()); 
 }
 
-function onEachFeature(feature, layer) {
+function contextmenuCZregion(e) {
+		    window.location.href = "observation.php"+"?region="+this.feature.properties.Okres+"&index="+wspNazwa;	
+}	
+
+function onEachFeatureCZregion(feature, layer) {
+
+	userData = userJson.data.filter(function (el) {
+		return el.Region === feature.properties.Okres; 
+	});
+	
+	for (var key in slownikWskaznikow) {
+		if (slownikWskaznikow.hasOwnProperty(key)) {
+			var prop = userData.filter(function (el) {
+				return el.Index === slownikWskaznikow[key]; 
+			});
+			
+			var noSpaces = slownikWskaznikow[key].replace(/\s/g, "");
+			feature.properties[noSpaces]=prop.length;
+			
+		}
+	}	
+	
+	
 	layer.on({
 		mouseover: highlightFeatureCZregion,
         mouseout: resetHighlightCZ,
         dblclick: unZoomCZ,
-		contextmenu: contextmenuPL
+		contextmenu: contextmenuCZregion
+			
 	});
+	
+	
 }
-
-	
-
-	
-

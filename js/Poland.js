@@ -13,6 +13,12 @@ function getColorPL(d) {
   		   '#ababab';
 }
 
+function getColorHogweed(d) {
+    return d >= 1  ? '#ba3600' :
+  	       d >= 0  ? '#00a816' :
+  		   '#ababab';
+}
+
 
 
 function noData(feature) {
@@ -53,7 +59,7 @@ function safe(feature) {
 
 function hogweed(feature) {
 	return {
-	    fillColor: '#bd0001',
+	    fillColor: getColorHogweed(feature.properties.HOGWEED),
 		weight: 1.5,
 		opacity: 1,
 		color: 'white',
@@ -89,12 +95,14 @@ if (!L.Browser.ie) {
 		dashArray: '',
 		fillOpacity: 1
      });
-
+	
 
 
 var props = 'e.target.feature.properties.'+wsp+'';
+	var noSpaces = wspNazwa.replace(/\s/g, "");
+var userObserve = 'e.target.feature.properties.'+noSpaces+'';
 
-	info._div.innerHTML = '<b>' + e.target.feature.properties.NAME_ENG +'</b></br></br>' + wspNazwa +': </b>'  + eval(props)  +'</br>';		//docelowo pozbyć się eval - jest ponoć niebezpieczna pod względem zabezpieczeń	
+	info._div.innerHTML = '<b>' + e.target.feature.properties.NAME_ENG +'</b><br><br>' + wspNazwa +': </b>'  + eval(props)+'<br>'+'User observations: '+eval(userObserve);		//docelowo pozbyć się eval - jest ponoć niebezpieczna pod względem zabezpieczeń	
 //document.getElementById("data").innerHTML
 
 	
@@ -116,9 +124,9 @@ function resetHighlightPL(e) {
 
 
 var regionPL; //dodawana nowa warstwa z powiatami
+var regionHog; //dodawana nowa warstwa z powiatami
 var clickRegion; //kliknięte województwo	
-	
-
+var clickRegionHog; //kliknięte województwo
 	
 function zoomToFeaturePL(e) {
 
@@ -148,23 +156,60 @@ function zoomToFeaturePL(e) {
 			layer.bringToBack()
 	
 		});
-	
+
 	
 }
 
 
-
-
-
-
 function zoomToFeaturePLhogweed(e) {
+
+
+
+		if (typeof clickRegionHog != "undefined") {
+			map.addLayer(clickRegionHog);
+			if (clickRegionHog.options.onEachFeature.name == "onEachFeaturePLhogweed"){
+				hogweedPoland.resetStyle(clickRegionHog);
+				if (typeof regionHog != "undefined") {
+					map.removeLayer(regionHog);
+				}
+			}
+
+		}
+
+		clickRegionHog = this;
+		map.removeLayer(clickRegionHog);
 		map.fitBounds(this.getBounds());	
+		regionHog = WarstwyPLhog[this.feature.properties.NAME_ENG];
+		map.addLayer(regionHog);
+		regionHog.eachLayer(function (layer) {
+			layer.bringToBack()
+	
+		});
+		
+		
 }	
 
+
 function onEachFeaturePL(feature, layer) {
+
+		userData = userJson.data.filter(function (el) {
+		return el.Region === feature.properties.NAME_ENG; 
+	});
 	
+	for (var key in slownikWskaznikow) {
+		if (slownikWskaznikow.hasOwnProperty(key)) {
+			var prop = userData.filter(function (el) {
+				return el.Index === slownikWskaznikow[key]; 
+			});
+			
+			var noSpaces = slownikWskaznikow[key].replace(/\s/g, "");
+			feature.properties[noSpaces]=prop.length;
+			
+		}
+	}	
+		
 	if (feature.properties.LYME_TREND == -11){
-	layer.bindLabel("no data", {pane:'labels'});
+	layer.bindLabel("Trend: no data", {pane:'labels'});
 	}
 	else{
 	layer.bindLabel("Trend: " + feature.properties.LYME_TREND, {pane:'labels'});
@@ -180,34 +225,54 @@ function onEachFeaturePL(feature, layer) {
 }
 
 function contextmenuPL(e) {
-		    window.location.href = "observation.html"+"?"+this.feature.properties.NAME_ENG;	
+		    window.location.href = "observation.php"+"?region="+this.feature.properties.NAME_ENG+"&index="+wspNazwa;	
 }	
 
 
 function onEachFeaturePLhogweed(feature, layer) {
+
+		userData = userJson.data.filter(function (el) {
+		return el.Region === feature.properties.NAME_ENG; 
+	});
+	
+	for (var key in slownikWskaznikow) {
+		if (slownikWskaznikow.hasOwnProperty(key)) {
+			var prop = userData.filter(function (el) {
+				return el.Index === slownikWskaznikow[key]; 
+			});
+			var noSpaces = slownikWskaznikow[key].replace(/\s/g, "");
+			feature.properties[noSpaces]=prop.length;
+			
+		}
+	}	
+	
+
+
     layer.on({
 		mouseover: highlightFeaturePL,
 		mouseout: resetHighlightPL,
 		click: zoomToFeaturePLhogweed,
+		contextmenu: contextmenuPL
     });
 }
 
-var Dolnoslaskie = L.geoJson(Dolnoslaskie,  {onEachFeature: onEachFeaturePLregion});
-var KujawskoPomorskie = L.geoJson(KujawskoPomorskie,  {onEachFeature: onEachFeaturePLregion});
-var Lodzkie = L.geoJson(Lodzkie,  {onEachFeature: onEachFeaturePLregion});
-var Lubelskie = L.geoJson(Lubelskie,  {onEachFeature: onEachFeaturePLregion});
-var Lubuskie = L.geoJson(Lubuskie,  {onEachFeature: onEachFeaturePLregion});
-var Malopolskie = L.geoJson(Malopolskie,  {onEachFeature: onEachFeaturePLregion});
-var Mazowieckie = L.geoJson(Mazowieckie,  {onEachFeature: onEachFeaturePLregion});
-var Opolskie = L.geoJson(Opolskie,  {onEachFeature: onEachFeaturePLregion});
-var Podkarpackie = L.geoJson(Podkarpackie,  {onEachFeature: onEachFeaturePLregion});
-var Podlaskie = L.geoJson(Podlaskie,  {onEachFeature: onEachFeaturePLregion});
-var Pomorskie = L.geoJson(Pomorskie,  {onEachFeature: onEachFeaturePLregion});
-var Slaskie = L.geoJson(Slaskie,  {onEachFeature: onEachFeaturePLregion});
-var Swietokrzyskie = L.geoJson(Swietokrzyskie,  {onEachFeature: onEachFeaturePLregion});
-var WarminskoMazurskie = L.geoJson(WarminskoMazurskie,  {onEachFeature: onEachFeaturePLregion});
-var Wielkopolskie = L.geoJson(Wielkopolskie,  {onEachFeature: onEachFeaturePLregion});
-var ZachodnioPomorskie = L.geoJson(ZachodnioPomorskie,  {onEachFeature: onEachFeaturePLregion});
+var Dolnoslaskie= new L.GeoJSON.AJAX('geojson/PL/Lower Silesian Voivodeship.geojson', {onEachFeature:onEachFeaturePLregion});
+//var Dolnoslaskie = L.geoJson(Dolnoslaskie,  {onEachFeature: onEachFeaturePLregion});
+var KujawskoPomorskie = new L.GeoJSON.AJAX('geojson/PL/Kuyavian-Pomeranian Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var Lodzkie = new L.GeoJSON.AJAX('geojson/PL/Lodz Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var Lubelskie = new L.GeoJSON.AJAX('geojson/PL/Lublin Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var Lubuskie = new L.GeoJSON.AJAX('geojson/PL/Lubusz Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var Malopolskie = new L.GeoJSON.AJAX('geojson/PL/Lesser Poland Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var Mazowieckie = new L.GeoJSON.AJAX('geojson/PL/Masovian Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var Opolskie = new L.GeoJSON.AJAX('geojson/PL/Opole Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var Podkarpackie = new L.GeoJSON.AJAX('geojson/PL/Podkarpackie Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var Podlaskie = new L.GeoJSON.AJAX('geojson/PL/Podlaskie Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var Pomorskie = new L.GeoJSON.AJAX('geojson/PL/Pomeranian Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var Slaskie = new L.GeoJSON.AJAX('geojson/PL/Silesian Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var Swietokrzyskie = new L.GeoJSON.AJAX('geojson/PL/Swietokrzyskie Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var WarminskoMazurskie = new L.GeoJSON.AJAX('geojson/PL/Warmian-Masurian Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var Wielkopolskie = new L.GeoJSON.AJAX('geojson/PL/Greater Poland Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
+var ZachodnioPomorskie = new L.GeoJSON.AJAX('geojson/PL/West Pomeranian Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
 
 
 
@@ -236,8 +301,58 @@ var WarstwyPL = {
 	"West Pomeranian Voivodeship" : ZachodnioPomorskie
 };	
 
+var H_Dolnoslaskie= new L.GeoJSON.AJAX('geojson/PL/H_Lower Silesian Voivodeship.geojson', {onEachFeature:onEachFeaturePLregionHog});
+
+var H_KujawskoPomorskie = new L.GeoJSON.AJAX('geojson/PL/H_Kuyavian-Pomeranian Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_Lodzkie = new L.GeoJSON.AJAX('geojson/PL/H_Lodz Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_Lubelskie = new L.GeoJSON.AJAX('geojson/PL/H_Lublin Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_Lubuskie = new L.GeoJSON.AJAX('geojson/PL/H_Lubusz Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_Malopolskie = new L.GeoJSON.AJAX('geojson/PL/H_Lesser Poland Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_Mazowieckie = new L.GeoJSON.AJAX('geojson/PL/H_Masovian Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_Opolskie = new L.GeoJSON.AJAX('geojson/PL/H_Opole Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_Podkarpackie = new L.GeoJSON.AJAX('geojson/PL/H_Podkarpackie Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_Podlaskie = new L.GeoJSON.AJAX('geojson/PL/H_Podlaskie Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_Pomorskie = new L.GeoJSON.AJAX('geojson/PL/H_Pomeranian Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_Slaskie = new L.GeoJSON.AJAX('geojson/PL/H_Silesian Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_Swietokrzyskie = new L.GeoJSON.AJAX('geojson/PL/H_Swietokrzyskie Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_WarminskoMazurskie = new L.GeoJSON.AJAX('geojson/PL/H_Warmian-Masurian Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_Wielkopolskie = new L.GeoJSON.AJAX('geojson/PL/H_Greater Poland Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+var H_ZachodnioPomorskie = new L.GeoJSON.AJAX('geojson/PL/H_West Pomeranian Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregionHog});
+
+
+var WojPLhog = L.featureGroup([H_Dolnoslaskie, H_KujawskoPomorskie, H_Lodzkie, H_Lubelskie, H_Lubuskie, H_Malopolskie, H_Mazowieckie, H_Opolskie, H_Podkarpackie, H_Podlaskie, H_Pomorskie, H_Slaskie, H_Swietokrzyskie, H_WarminskoMazurskie, H_Wielkopolskie, H_ZachodnioPomorskie]);
+WojPLhog.eachLayer(function (layer) {
+    layer.setStyle(hogweed);
+});
+
+
+
+
+
+var WarstwyPLhog = {
+	"Lower Silesian Voivodeship" : H_Dolnoslaskie,
+	"Kuyavian-Pomeranian Voivodeship" : H_KujawskoPomorskie,
+	"Lodz Voivodeship" : H_Lodzkie,
+	"Lublin Voivodeship" : H_Lubelskie,
+	"Lubusz Voivodeship" : H_Lubuskie,
+	"Lesser Poland Voivodeship" : H_Malopolskie,
+	"Masovian Voivodeship" : H_Mazowieckie,
+	"Opole Voivodeship" : H_Opolskie,
+	"Podkarpackie Voivodeship" : H_Podkarpackie,
+	"Podlaskie Voivodeship" : H_Podlaskie,
+	"Pomeranian Voivodeship" : H_Pomorskie,
+	"Silesian Voivodeship" : H_Slaskie,
+	"Swietokrzyskie Voivodeship" : H_Swietokrzyskie,
+	"Warmian-Masurian Voivodeship" : H_WarminskoMazurskie,
+	"Greater Poland Voivodeship" : H_Wielkopolskie,
+	"West Pomeranian Voivodeship" : H_ZachodnioPomorskie
+};	
+
+
 	
 function highlightFeaturePLregion(e) {
+
+
 	this.setStyle({
 		weight: 1.5,
 		color: 'white',
@@ -247,10 +362,15 @@ function highlightFeaturePLregion(e) {
 if (!L.Browser.ie) {   
     this.bringToFront();
 }
+
+
 	
 	var props = 'e.target.feature.properties.'+wsp+'';
+
+	var noSpaces = wspNazwa.replace(/\s/g, "");
+	var userObserve = 'e.target.feature.properties.'+noSpaces+'';
 	
-	info._div.innerHTML = '<b>' + this.feature.properties.NAME_PL +' '+ this.feature.properties.TYPE +'</b></br></br>' + wspNazwa +': </b>'  + eval(props)  +'</br></br></br>';
+	info._div.innerHTML = '<b>' + this.feature.properties.NAME_PL +' '+ this.feature.properties.TYPE +'</b><br><br>' + wspNazwa +': '  + eval(props)+'<br>'+'User observations: '+eval(userObserve);	
 //document.getElementById("data").innerHTML	
 }
 
@@ -258,6 +378,10 @@ function unZoomPL(e) {
 	if (typeof regionPL != "undefined") {
 		map.removeLayer(regionPL);
 	}
+	if (typeof regionHog != "undefined") {
+		map.removeLayer(regionHog);
+	}	
+	
 	if (typeof clickRegion != "undefined") {
 		map.addLayer(clickRegion);
 
@@ -266,10 +390,42 @@ function unZoomPL(e) {
 	map.fitBounds(Poland.getBounds()); 
 }
 
+function unZoomPLhog(e) {
+	
+	if (typeof regionHog != "undefined") {
+		map.removeLayer(regionHog);
+	}	
+	
+	if (typeof clickRegionHog != "undefined") {
+		map.addLayer(clickRegionHog);
+
+		hogweedPoland.resetStyle(clickRegionHog);
+	}
+	map.fitBounds(hogweedPoland.getBounds()); 
+}
+
+
+
 function onEachFeaturePLregion(feature, layer) {
 
+	userData = userJson.data.filter(function (el) {
+		return el.Region === feature.properties.NAME_PL +' '+ feature.properties.TYPE; 
+	});
+	
+	for (var key in slownikWskaznikow) {
+		if (slownikWskaznikow.hasOwnProperty(key)) {
+			var prop = userData.filter(function (el) {
+				return el.Index === slownikWskaznikow[key]; 
+			});
+			
+			var noSpaces = slownikWskaznikow[key].replace(/\s/g, "");
+			feature.properties[noSpaces]=prop.length;
+			
+		}
+	}	
+
 	if (feature.properties.LYME_TREND == -11){
-	layer.bindLabel("no data", {pane:'labels'});
+	layer.bindLabel("Trend: no data", {pane:'labels'});
 	}
 	else{
 	layer.bindLabel("Trend: " + feature.properties.LYME_TREND, {pane:'labels'});
@@ -278,9 +434,39 @@ function onEachFeaturePLregion(feature, layer) {
 		mouseover: highlightFeaturePLregion,
         mouseout: resetHighlightPL,
         dblclick: unZoomPL,
-		contextmenu: contextmenuPL
+		contextmenu: contextmenuPLregion
+	});
+}
+function contextmenuPLregion(e) {
+		    window.location.href = "observation.php"+"?region="+this.feature.properties.NAME_PL +' '+ this.feature.properties.TYPE+"&index="+wspNazwa;	
+}	
+	
+function onEachFeaturePLregionHog(feature, layer) {
+
+	userData = userJson.data.filter(function (el) {
+		return el.Region === feature.properties.NAME_PL; 
+	});
+	
+	for (var key in slownikWskaznikow) {
+		if (slownikWskaznikow.hasOwnProperty(key)) {
+			var prop = userData.filter(function (el) {
+				return el.Index === slownikWskaznikow[key]; 
+			});
+			
+			var noSpaces = slownikWskaznikow[key].replace(/\s/g, "");
+			feature.properties[noSpaces]=prop.length;
+			
+		}
+	}	
+
+	layer.on({
+		mouseover: highlightFeaturePLregion,
+        mouseout: resetHighlightPL,
+        dblclick: unZoomPLhog,
+		contextmenu: contextmenuPLregionHog
 	});
 }
 
-	
-
+function contextmenuPLregionHog(e) {
+		    window.location.href = "observation.php"+"?region="+this.feature.properties.NAME_PL +"&index="+wspNazwa;	
+}	
