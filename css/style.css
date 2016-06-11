@@ -547,3 +547,114 @@ img.big {
 	max-width: 600px;
 
 }
+
+img.small {
+
+	margin-left: auto;
+	margin-right: auto;
+	padding: 2px;
+	position: center;
+	width:100%;
+	max-width: 200px;
+	max-height: 200px;
+
+}
+
+img.smallH {
+
+	margin-left: auto;
+	margin-right: auto;
+	padding: 2px;
+	position: center;
+	width:100%;
+	max-width: 100px;
+	max-height: 150px;
+
+}
+
+
+
+nav a.base {
+    position: relative;
+    display: inline-block;
+    margin: 5px 5px;
+    outline: none;
+    color: #fff;
+		background-color: #2db300;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 400;
+    text-shadow: 0 0 1px rgba(255,255,255,0.3);
+    font-size: 1.35em;
+}
+
+nav a.base:hover,
+nav a.base:focus {
+    outline: none;
+}
+
+.cl_effect_14 a.base {
+    padding: 0 10px;
+    height: 45px;
+    line-height: 45px;
+}
+
+.cl_effect_14 a.base::before,
+.cl_effect_14 a.base::after {
+    position: absolute;
+    width: 45px;
+    height: 2px;
+    background: #000;
+    content: '';
+    opacity: 0.2;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    pointer-events: none;
+}
+
+.cl_effect_14 a.base::before {
+    top: 0;
+    left: 0;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+
+.cl_effect_14 a.base::after {
+    right: 0;
+    bottom: 0;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-transform-origin: 100% 0;
+    -moz-transform-origin: 100% 0;
+    transform-origin: 100% 0;
+}
+
+.cl_effect_14 a.base:hover::before,
+.cl_effect_14 a.base:hover::after,
+.cl_effect_14 a.base:focus::before,
+.cl_effect_14 a.base:focus::after {
+    opacity: 1;
+}
+
+.cl_effect_14 a.base:hover::before,
+.cl_effect_14 a.base:focus::before {
+    left: 50%;
+    -webkit-transform: rotate(0deg) translateX(-50%);
+    -moz-transform: rotate(0deg) translateX(-50%);
+    transform: rotate(0deg) translateX(-50%);
+}
+
+.cl_effect_14 a.base:hover::after,
+.cl_effect_14 a.base:focus::after {
+    right: 50%;
+    -webkit-transform: rotate(0deg) translateX(50%);
+    -moz-transform: rotate(0deg) translateX(50%);
+    transform: rotate(0deg) translateX(50%);
+}
