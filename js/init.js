@@ -174,7 +174,9 @@ function check(radioValue) {
 		}		
 
 		if (radioValue == 'LYME_DIS' ){
-
+		$('.hideCB').addClass('showCB').removeClass('hideCB');
+		
+			
 			// var plik = "opisy/lymeDiseasePolandDesc.html";
 			// jQuery.get(plik, function(opis) {
 				// document.getElementById("info").innerHTML = "";
@@ -207,6 +209,22 @@ function check(radioValue) {
 				// Czech.resetStyle(clickRegion);
 			}
 		} else {
+			$('.showCB').addClass('hideCB').removeClass('showCB');
+			$('#layer1').attr('checked', false);
+			Poland.setStyle(styleLymePL);
+			Czech.setStyle(styleLymeCZ);
+			Belarus.setStyle(styleLymeBLR);
+			WojPL.eachLayer(function (layer) {
+				layer.setStyle(styleLymePL);
+			});
+			WojCZ.eachLayer(function (layer) {
+				layer.setStyle(styleLymeCZ);
+			});
+			WojPLsentinel.eachLayer(function (layer) {
+				map.removeLayer(layer);
+			});
+			
+			
 			map.removeLayer(Poland);
 			group.removeLayer(Poland);
 			map.removeLayer(Czech);
@@ -369,7 +387,7 @@ legend.update = function () {
 	var grades;
 	var labels;
 
-	if (wsp == "LYME_DIS"){
+	if (wsp == "LYME_DIS" && $('#layer1').prop('checked')!=1){
 		grades = [0, 126, 251, 376, 501, 626, 751, 876, -1];
 		labels = ["<b>low risk</b>", "", "", "", "", "", "", "<b>high risk</b><br>", "<b>no data</b>"];
 	}
@@ -389,6 +407,57 @@ legend.update = function () {
 };
 legend.addTo(map);
 
+var layers = L.control({ position: 'bottomright' });
+
+layers.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info');
+    this.update();
+    return this._div;
+};
+layers.update = function (props) {
+
+			layers._div.innerHTML = '<div class="hideCB"><input type="checkbox" id="layer1"><label id="layer1" for="layer1">Toggle<br/>Sentinel Data</label></input></div>'
+
+};
+layers.addTo(map);
+
+$('#layer1').on('change', function(){
+
+legend.update();
+
+		if (this.checked){
+			Poland.setStyle(styleLymePL2);
+			Czech.setStyle(styleLymeCZ2);
+			Belarus.setStyle(styleLymeBLR2);
+			console.log(Poland.options);
+			WojPL.eachLayer(function (layer) {
+				layer.setStyle(styleLymePL2);
+			});
+			WojCZ.eachLayer(function (layer) {
+				layer.setStyle(styleLymeCZ2);
+			});
+			WojPLsentinel.eachLayer(function (layer) {
+				layer.addTo(map);
+			});
+			
+			
+		}
+		else {
+			Poland.setStyle(styleLymePL);
+			Czech.setStyle(styleLymeCZ);
+			Belarus.setStyle(styleLymeBLR);
+			WojPL.eachLayer(function (layer) {
+				layer.setStyle(styleLymePL);
+			});
+			WojCZ.eachLayer(function (layer) {
+				layer.setStyle(styleLymeCZ);
+			});
+			WojPLsentinel.eachLayer(function (layer) {
+				map.removeLayer(layer);
+			});
+		}
+
+});
 
 map.on('zoomstart', function() {
 	map.removeLayer(labels);

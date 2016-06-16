@@ -19,6 +19,12 @@ function getColorHogweed(d) {
   		   '#ababab';
 }
 
+function getColorPLsentinel(d) {
+    return d >= 2  ? '#ababab' :
+		   d >= 1  ? '#ba3600' :
+  	       d >= 0  ? '#00a816' :
+  		   '#ababab';
+}
 
 
 function noData(feature) {
@@ -80,21 +86,61 @@ function styleLymePL(feature) {
 		interactive:true,
 	};
 }
+
+function styleLymePL2(feature) {
+	return {
+	    fillColor: getColorPL(feature.properties.LYME_DIS),
+		weight: 1.5,
+		opacity: 1,
+		color: 'white',
+		dashArray: '',
+		fillOpacity: 0.20,
+		interactive:true,
+	};
+}
+
+
+function styleLymePLsentinel(feature) {
+	return {
+	    fillColor: getColorPLsentinel(feature.properties.DN),
+		weight: 0,
+		opacity: 0,
+		color: 'white',
+		dashArray: '',
+		fillOpacity: 1,
+		interactive:false,
+	};
+}
 	
 		
-			
+	
 
 function highlightFeaturePL(e) {
 
 if (!L.Browser.ie) {   
     this.bringToFront();
 }
-		this.setStyle({
-		weight: 1.5,
+
+if ($('#layer1').prop('checked')==1){
+    this.setStyle({
+		weight: 1,
 		color: '#666',
 		dashArray: '',
-		fillOpacity: 1
-     });
+		fillOpacity: 0.3,
+	});
+
+}
+else {
+    this.setStyle({
+		weight: 1,
+		color: '#666',
+		dashArray: '',
+		fillOpacity: 1,
+	});
+
+};
+
+
 	
 
 
@@ -110,6 +156,18 @@ var userObserve = 'e.target.feature.properties.'+noSpaces+'';
 
 function resetHighlightPL(e) {	
 
+	
+if ($('#layer1').prop('checked')==1){
+    this.setStyle({
+		weight: 1.5,
+		opacity: 1,
+		color: 'white',
+		dashArray: '',
+		fillOpacity: 0.20,
+	});
+
+}
+else {
     this.setStyle({
 		weight: 1.5,
 		opacity: 1,
@@ -117,6 +175,8 @@ function resetHighlightPL(e) {
 		dashArray: '',
 		fillOpacity: 0.80,
 	});
+
+	};
   //  this.bringToBack();
 	info._div.innerHTML = "<b>hover on region</b>";
 //document.getElementById("data").innerHTML
@@ -274,6 +334,23 @@ var WarminskoMazurskie = new L.GeoJSON.AJAX('geojson/PL/Warmian-Masurian Voivode
 var Wielkopolskie = new L.GeoJSON.AJAX('geojson/PL/Greater Poland Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
 var ZachodnioPomorskie = new L.GeoJSON.AJAX('geojson/PL/West Pomeranian Voivodeship.geojson',  {onEachFeature: onEachFeaturePLregion});
 
+var dolnoslaskie_Milicki = new L.GeoJSON.AJAX('geojson/PLsentinel/dolnoslaskie_Milicki.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+var lubuskie_GorzowWielkopolski = new L.GeoJSON.AJAX('geojson/PLsentinel/lubuskie_GorzowWielkopolski.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+var lubuskie_Miedzyrzecki = new L.GeoJSON.AJAX('geojson/PLsentinel/lubuskie_Miedzyrzecki.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+var lubuskie_StrzeleckoDrezdenecki = new L.GeoJSON.AJAX('geojson/PLsentinel/lubuskie_StrzeleckoDrezdenecki.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+var wielkopolskie_Gostynski = new L.GeoJSON.AJAX('geojson/PLsentinel/wielkopolskie_Gostynski.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+var wielkopolskie_Jarocinski = new L.GeoJSON.AJAX('geojson/PLsentinel/wielkopolskie_Jarocinski.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+var wielkopolskie_krotoszynski = new L.GeoJSON.AJAX('geojson/PLsentinel/wielkopolskie_krotoszynski.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+var wielkopolskie_Leszno = new L.GeoJSON.AJAX('geojson/PLsentinel/wielkopolskie_Leszno.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+var wielkopolskie_Miedzychodzki = new L.GeoJSON.AJAX('geojson/PLsentinel/wielkopolskie_Miedzychodzki.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+var wielkopolskie_Pleszewski = new L.GeoJSON.AJAX('geojson/PLsentinel/wielkopolskie_Pleszewski.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+var wielkopolskie_Rawicki = new L.GeoJSON.AJAX('geojson/PLsentinel/wielkopolskie_Rawicki.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+var wielkopolskie_Sremski = new L.GeoJSON.AJAX('geojson/PLsentinel/wielkopolskie_Sremski.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+var zachodniopomorskie_Bialogardzki = new L.GeoJSON.AJAX('geojson/PLsentinel/zachodniopomorskie_Bialogardzki.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+var zachodniopomorskie_Drawski = new L.GeoJSON.AJAX('geojson/PLsentinel/zachodniopomorskie_Drawski.geojson',  {onEachFeature: onEachFeaturePLsentinel, style: styleLymePLsentinel});
+
+
+var WojPLsentinel = L.featureGroup([dolnoslaskie_Milicki, lubuskie_GorzowWielkopolski, lubuskie_Miedzyrzecki, lubuskie_StrzeleckoDrezdenecki, wielkopolskie_Gostynski, wielkopolskie_Jarocinski, wielkopolskie_krotoszynski, wielkopolskie_Leszno, wielkopolskie_Miedzychodzki, wielkopolskie_Pleszewski, wielkopolskie_Rawicki, wielkopolskie_Sremski, zachodniopomorskie_Bialogardzki, zachodniopomorskie_Drawski]);
 
 
 var WojPL = L.featureGroup([Dolnoslaskie, KujawskoPomorskie, Lodzkie, Lubelskie, Lubuskie, Malopolskie, Mazowieckie, Opolskie, Podkarpackie, Podlaskie, Pomorskie, Slaskie, Swietokrzyskie, WarminskoMazurskie, Wielkopolskie, ZachodnioPomorskie]);
@@ -470,3 +547,14 @@ function onEachFeaturePLregionHog(feature, layer) {
 function contextmenuPLregionHog(e) {
 		    window.location.href = "observation.php"+"?region="+this.feature.properties.NAME_PL +"&index="+wspNazwa;	
 }	
+
+
+
+function onEachFeaturePLsentinel(feature, layer) {
+
+	layer.on({
+
+        dblclick: unZoomPL,
+
+	});
+}

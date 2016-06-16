@@ -170,8 +170,11 @@ table#statusTable td	{
 
 
 
-.hidden{
+.hideCB{
 	display:none;
+}
+.showCB{
+	display:initial;
 }
 
 #dim {
@@ -500,6 +503,21 @@ label#locatelabel{
 }
 
 input#locate:checked  ~ label#locatelabel{
+	background   : url('../images/checks2.png') no-repeat 0 center;
+	background-size: contain;
+}
+
+
+label#layer1{
+	display      : inline;
+	margin-left  : -0.5em;
+	padding-left : 1.5em;
+	background   : url('../images/checks.png') no-repeat left center;
+	background-size: contain;
+	margin-bottom: 0em !important;
+}
+
+input#layer1:checked  ~ label#layer1{
 	background   : url('../images/checks2.png') no-repeat 0 center;
 	background-size: contain;
 }

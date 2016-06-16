@@ -16,20 +16,45 @@ function styleLymeBLR(feature) {
 		weight: 1.5,
 		opacity: 1,
 		color: 'white',
-		dashArray: '3',
+		dashArray: '',
 		fillOpacity: 0.80,
+		interactive:true,
+	};
+}
+
+function styleLymeBLR2(feature) {
+	return {
+	    fillColor: getColorBLR(feature.properties.INFECTED),
+		weight: 1.5,
+		opacity: 1,
+		color: 'white',
+		dashArray: '',
+		fillOpacity: 0.20,
 		interactive:true,
 	};
 }
 	
 
 function highlightFeatureBLR(e) {
+
+if ($('#layer1').prop('checked')==1){
     this.setStyle({
-		weight: 1.5,
+		weight: 1,
 		color: '#666',
 		dashArray: '',
-		fillOpacity: 1
-    });
+		fillOpacity: 0.3,
+	});
+
+}
+else {
+    this.setStyle({
+		weight: 1,
+		color: '#666',
+		dashArray: '',
+		fillOpacity: 1,
+	});
+
+};
 	if (!L.Browser.ie) {   
 		this.bringToFront();
 	}
@@ -44,13 +69,26 @@ function highlightFeatureBLR(e) {
 }
 
 function resetHighlightBLR(e) {	
+   if ($('#layer1').prop('checked')==1){
     this.setStyle({
 		weight: 1.5,
 		opacity: 1,
 		color: 'white',
-		dashArray: '3',
+		dashArray: '',
+		fillOpacity: 0.20,
+	});
+
+}
+else {
+    this.setStyle({
+		weight: 1.5,
+		opacity: 1,
+		color: 'white',
+		dashArray: '',
 		fillOpacity: 0.80,
 	});
+
+	};
     this.bringToBack();
 	info._div.innerHTML = "<b>hover on region</b>";
 //document.getElementById("data").innerHTML
